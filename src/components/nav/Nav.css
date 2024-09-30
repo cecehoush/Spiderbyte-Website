@@ -1,0 +1,64 @@
+nav {
+  background-color: #3e3e3e;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.challengeButton {
+  background-color: #202223;
+  padding: 4px 10px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+}
+
+.web {
+  margin-left: 8px;
+  height: 30px;
+  width: 30px;
+}
+
+.links {
+  display: flex;
+  gap: 50px;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: larger;
+}
+
+.active {
+  color: #53d597;
+}
+
+.searchAndProfile {
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  width: 200px;
+  background: #c0bfbf;
+  margin-right: 30px;
+  height: 30px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.cat {
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+}

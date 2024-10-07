@@ -18,8 +18,8 @@ function Profile() {
         console.log(`Remove tag clicked: ${tag}`);
     };
 
-     // Generate placeholder data for 3 weeks (active vs. inactive)
-     const generateStreakData = () => {
+    // Generate placeholder data for 3 weeks (active vs. inactive)
+    const generateStreakData = () => {
         return Array(21).fill(0).map(() => Math.random() < 0.5);
     };
 
@@ -83,6 +83,19 @@ function Profile() {
                     </div>
                 </div>
             </div>
+            {/* ... (previous code remains the same) */}
+            <div className="bottom-boxes-container">
+                <div className="bottom-box recent-activity">
+                    <h3 className="box-title">Recent Activity:</h3>
+                    {/* Add content for Recent Activity here */}
+                </div>
+                <div className="bottom-box playlists">
+                    <h3 className="box-title">Playlists:</h3>
+                    <button className="add-playlist-button">+</button>
+                    {/* Add content for Playlists here */}
+                </div>
+            </div>
+            {/* ... (rest of the component remains the same) */}
         </div>
     );
 }

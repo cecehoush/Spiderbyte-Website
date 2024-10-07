@@ -1,12 +1,12 @@
 .profile-container {
-    padding: 20px;
+    padding: 30px;
 }
 
 .stats-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
 }
 
 .stat-box {
@@ -56,6 +56,7 @@
     align-items: center;
     margin-right: 20px;
     margin-left: 40px;
+    margin-bottom: 40px;
 }
 
 .profile-picture {
@@ -152,6 +153,7 @@
     flex: 0 1 auto; 
     min-width: 300px;
     margin-right: 100px;
+    margin-bottom: 40px;
 }
 
 .streak-calendar h3 {
@@ -240,6 +242,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.add-playlist-button:hover {
+    color: #53D597;
 }
 
 @media (max-width: 768px) {

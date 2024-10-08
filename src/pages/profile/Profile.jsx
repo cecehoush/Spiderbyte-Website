@@ -2,8 +2,7 @@ import React from 'react';
 import './Profile.css';
 import catImage from '../../assets/cat.jpg'; 
 
-function Profile() {
-    const username = "Cece Housh";
+function Profile({ onLogout, username }) {
     const tags = ["arrays", "loops", "python", "robotics", "conditional statements", "recursion", "iteration", "sorting", "searching", "trees", "linked lists", "queues", "stacks", "heaps", "pointers"];
 
     const handleEditProfile = () => {
@@ -54,6 +53,7 @@ function Profile() {
                     <div className="profile-image-container">
                         <img src={catImage} alt="User profile" className="profile-picture" />
                         <button className="edit-profile-button" onClick={handleEditProfile}>Edit Profile</button>
+                        <button className="logout-button" onClick={onLogout}>Logout</button>
                     </div>
                     <div className="username-and-tags">
                         <h2 className="username">{username}</h2>
@@ -83,7 +83,6 @@ function Profile() {
                     </div>
                 </div>
             </div>
-            {/* ... (previous code remains the same) */}
             <div className="bottom-boxes-container">
                 <div className="bottom-box recent-activity">
                     <h3 className="box-title">Recent Activity:</h3>
@@ -95,7 +94,6 @@ function Profile() {
                     {/* Add content for Playlists here */}
                 </div>
             </div>
-            {/* ... (rest of the component remains the same) */}
         </div>
     );
 }

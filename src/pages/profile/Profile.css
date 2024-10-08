@@ -248,6 +248,23 @@
     color: #53D597;
 }
 
+.logout-button {
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.logout-button:hover {
+    background-color: #FF4747;
+}
+
 @media (max-width: 768px) {
     .user-info-and-streak {
         justify-content: center; 

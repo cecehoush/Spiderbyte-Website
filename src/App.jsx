@@ -7,6 +7,7 @@ import Subjects from './pages/subjects/Subjects.jsx';
 import Profile from './pages/profile/Profile.jsx';
 import Challenge from './pages/challenge/Challenge.jsx';
 import LoginSignup from './pages/auth/Auth.jsx';
+import CodeEditorPage from './pages/code-editor/CodeEditor.jsx'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -82,6 +83,7 @@ function App() {
             )
           } 
         />
+         <Route path="/codeeditor" element={<CodeEditorPage/>} />
       </Routes>
     </>
   );

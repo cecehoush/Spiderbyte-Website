@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Encrippin",
+    "description": "A top-secret encryption algorithm that barks louder than it bites.",
+    "questions": ["453453246", "3453246546234", "34532463246"],
+    "image": "https://images.unsplash.com/photo-1593642532973-d31b6557fa68"
+  },
+  {
+    "id": 2,
+    "name": "Null POINTERS",
+    "description": "A debugging group that specializes in finding and fixing those pesky null pointer exceptions.",
+    "questions": ["745832495", "98347598345", "34850293485"],
+    "image": "https://images.unsplash.com/photo-1547721064-da6cfb341d50"
+  },
+  {
+    "id": 3,
+    "name": "C++ Crushers",
+    "description": "The ultimate coding warriors who conquer C++ challenges with finesse.",
+    "questions": ["238947234", "9485734985", "238974238974"],
+    "image": "https://images.unsplash.com/photo-1517430816045-df4b7de2aa4b"
+  },
+  {
+    "id": 4,
+    "name": "Java Junkies",
+    "description": "An elite team of coders fueled by coffee and passion for Java programming.",
+    "questions": ["1029384756", "209384756", "1230984576"],
+    "image": "https://images.unsplash.com/photo-1556740749-887f6717d7e4"
+  },
+  {
+    "id": 5,
+    "name": "Pythonistas",
+    "description": "A group of snake charmers... who also happen to be Python experts.",
+    "questions": ["987654321", "123456789", "456789123"],
+    "image": "https://images.unsplash.com/photo-1573497019411-6b82cce7e3a1"
+  },
+  {
+    "id": 6,
+    "name": "Rustaceans",
+    "description": "Rustaceans never fear bugs; they code fearlessly in Rust, the memory-safe warrior.",
+    "questions": ["348593485", "598349853", "839485394"],
+    "image": "https://images.unsplash.com/photo-1519331379825-92c0800283bb"
+  },
+  {
+    "id": 7,
+    "name": "Swift Swans",
+    "description": "Gracefully navigating the world of iOS development with Swift expertise.",
+    "questions": ["948573948", "3847503485", "458934758"],
+    "image": "https://images.unsplash.com/photo-1573495612937-08a69e46a409"
+  },
+  {
+    "id": 8,
+    "name": "Go Gophers",
+    "description": "A fun-loving team that makes concurrency and simplicity their best friends in Golang.",
+    "questions": ["574839573", "748393847", "3847538475"],
+    "image": "https://images.unsplash.com/photo-1542831371-d531d36971e6"
+  },
+  {
+    "id": 9,
+    "name": "TypeScript Titans",
+    "description": "Type safety, reusability, and strong typing make these coders unstoppable.",
+    "questions": ["584738573", "93847593485", "2349853984"],
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+  },
+  {
+    "id": 10,
+    "name": "Ruby Rascals",
+    "description": "Bringing elegance and simplicity to coding with the power of Ruby.",
+    "questions": ["458934583", "29384739485", "23498459384"],
+    "image": "https://images.unsplash.com/photo-1504198458649-3128b932f49b"
+  }
+]

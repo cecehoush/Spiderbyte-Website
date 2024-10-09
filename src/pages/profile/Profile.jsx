@@ -2,7 +2,7 @@ import React from 'react';
 import './Profile.css';
 import catImage from '../../assets/cat.jpg'; 
 
-function Profile({ onLogout, username }) {
+function Profile({ onLogout, username, streakData }) {
     const tags = ["arrays", "loops", "python", "robotics", "conditional statements", "recursion", "iteration", "sorting", "searching", "trees", "linked lists", "queues", "stacks", "heaps", "pointers"];
 
     const handleEditProfile = () => {
@@ -16,13 +16,6 @@ function Profile({ onLogout, username }) {
     const handleRemoveTag = (tag) => {
         console.log(`Remove tag clicked: ${tag}`);
     };
-
-    // Generate placeholder data for 3 weeks (active vs. inactive)
-    const generateStreakData = () => {
-        return Array(21).fill(0).map(() => Math.random() < 0.5);
-    };
-
-    const streakData = generateStreakData();
 
     return (
         <div className="profile-container">

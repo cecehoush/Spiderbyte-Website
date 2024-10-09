@@ -27,7 +27,7 @@
     color: #FFFFFF;
 }
 
-.login-signup-container button {
+.submit-button {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -37,7 +37,7 @@
     transition: background-color 0.3s;
 }
 
-.login-signup-container button:hover {
+.submit-button:hover {
     background-color: #45B37E;
 }
 
@@ -47,14 +47,15 @@
     color: #FFFFFF;
 }
 
-.login-signup-container p button {
+.switch-auth-mode {
     background: none;
     border: none;
     color: #53D597;
     cursor: pointer;
     text-decoration: underline;
+    transition: color 0.3s;
 }
 
-.login-signup-container p button:hover {
-    color: #45B37E;
+.switch-auth-mode:hover {
+    color: #FF6B6B;
 }

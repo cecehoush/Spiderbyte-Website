@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import './Auth.css';
 
 function LoginSignup({ onLogin, onSignup }) {
-    const [isLogin, setIsLogin] = useState(true);
+    const location = useLocation();
+    const isLogin = location.pathname === '/login';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -33,13 +35,15 @@ function LoginSignup({ onLogin, onSignup }) {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
+                <button type="submit" className="submit-button">
+                    {isLogin ? 'Login' : 'Sign Up'}
+                </button>
             </form>
             <p>
                 {isLogin ? "Don't have an account? " : "Already have an account? "}
-                <button onClick={() => setIsLogin(!isLogin)}>
+                <Link to={isLogin ? '/signup' : '/login'} className="switch-auth-mode">
                     {isLogin ? 'Sign Up' : 'Login'}
-                </button>
+                </Link>
             </p>
         </div>
     );

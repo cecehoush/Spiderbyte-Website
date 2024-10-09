@@ -11,7 +11,9 @@ import CodeEditorPage from "./pages/code-editor/CodeEditor.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([
+    { username: 'user', password: 'password123' } // Our default user, until we have the auth more integrated. Only for testing purposes!
+  ]);
   const navigate = useNavigate();
 
     // Generate placeholder data for 3 weeks (active vs. inactive)
@@ -104,6 +106,16 @@ function App() {
               <LoginSignup onLogin={handleLogin} onSignup={handleSignup} />
             )
           }
+        />
+        <Route 
+          path="/signup" 
+          element={
+            isLoggedIn ? (
+              <Navigate to="/profile" replace />
+            ) : (
+              <LoginSignup onLogin={handleLogin} onSignup={handleSignup} />
+            )
+          } 
         />
         <Route path="/codeeditor" element={<CodeEditorPage />} />
       </Routes>

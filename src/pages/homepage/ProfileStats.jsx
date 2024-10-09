@@ -15,7 +15,7 @@ export default function ProfileStats({ isLoggedIn, username, streakData }) {
       </div>
       <div className="profile-stats-content">
         <button className="profile-stats-button" onClick={() => window.location.href = '/login'}>Login</button>
-        <button className="profile-stats-button" onClick={() => window.location.href = '/login'}>Sign Up</button>
+        <button className="profile-stats-button" onClick={() => window.location.href = '/signup'}>Sign Up</button>
       </div>
       </div>
     );

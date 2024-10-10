@@ -249,8 +249,8 @@
 }
 
 .logout-button {
-    background-color: #FF6B6B;
-    color: white;
+    background-color: #53D597;
+    color: black;
     border: none;
     padding: 4px 8px;
     border-radius: 10px;
@@ -262,7 +262,8 @@
 }
 
 .logout-button:hover {
-    background-color: #FF4747;
+    background-color: #e81111;
+    color: white;
 }
 
 @media (max-width: 768px) {

@@ -18,33 +18,35 @@ function LoginSignup({ onLogin, onSignup }) {
     };
 
     return (
-        <div className="login-signup-container">
-            <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit" className="submit-button">
-                    {isLogin ? 'Login' : 'Sign Up'}
-                </button>
-            </form>
-            <p>
-                {isLogin ? "Don't have an account? " : "Already have an account? "}
-                <Link to={isLogin ? '/signup' : '/login'} className="switch-auth-mode">
-                    {isLogin ? 'Sign Up' : 'Login'}
-                </Link>
-            </p>
+        <div className="auth-page-container">
+            <div className="login-signup-container">
+                <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <button type="submit" className="submit-button">
+                        {isLogin ? 'Login' : 'Sign Up'}
+                    </button>
+                </form>
+                <p>
+                    {isLogin ? "Don't have an account? " : "Already have an account? "}
+                    <Link to={isLogin ? '/signup' : '/login'} className="switch-auth-mode">
+                        {isLogin ? 'Sign Up' : 'Login'}
+                    </Link>
+                </p>
+            </div>
         </div>
     );
 }

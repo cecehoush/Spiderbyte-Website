@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
+import PropTypes from 'prop-types';
 
 function ResponsiveMonacoEditor({ language = 'python', value = '// Start typing...', onChange }) {
   const editorRef = useRef(null);
@@ -43,10 +44,17 @@ function ResponsiveMonacoEditor({ language = 'python', value = '// Start typing.
         onMount={handleEditorDidMount}
         options={{
           automaticLayout: false,  // Disable automatic resizing to avoid feedback loops
+          minimap: { enabled: false }, // Disable the minimap
         }}
       />
     </div>
   );
 }
+
+ResponsiveMonacoEditor.propTypes = {
+  language: PropTypes.string,
+  value: PropTypes.string, 
+  onChange: PropTypes.func.isRequired, 
+};
 
 export default ResponsiveMonacoEditor;

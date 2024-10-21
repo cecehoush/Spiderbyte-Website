@@ -21,3 +21,45 @@
         "solved": 0
     }
 ]
+
+
+{
+    "challenge_title": "Caesar Cipher Encryption",
+    "problem_description": {
+      "description": "Implement a function to encrypt a given text using the Caesar cipher algorithm. The Caesar cipher is a simple substitution cipher where each letter in the plaintext is shifted   
+   by a fixed number of positions 
+   down the alphabet. For example, if the shift is 1, 'a' becomes 'b', 'b' becomes 'c', and so on. If the shift takes the letter beyond 'z', it wraps around to 'a'.",
+      "input_format": "A string `text` representing the plaintext to be encrypted, and an integer `shift` indicating the number of positions to shift the letters.",
+      "output_format": "A string representing the encrypted text.",
+      "constraints": "1 <= shift <= 25. The plaintext and ciphertext will only contain lowercase English letters."
+    },
+    "skeleton_code": {
+      "language": "python",
+      "code": "def caesar_cipher(text, shift):\n  # Your code here\n  return"
+    },
+    "test_cases": [
+      {
+        "input": {
+          "text": "hello world",
+          "shift": 3
+        },
+        "expected_output": "khoor zruog"
+      },
+      {
+        "input": {
+          "text": "abcxyz",
+          "shift": 2
+        },
+        "expected_output": "cdeab"
+      },
+      {
+        "input": {
+          "text": "zzz",
+          "shift": 1
+        },
+        "expected_output": "aaa"
+      }
+    ]
+  }
+
+  

@@ -16,17 +16,11 @@
   ],
   "test_cases": [
     {
-      "input": {
-        "text": "hello world",
-        "shift": 3
-      },
+      "inputs": ["hello world", 3],
       "expected_output": "khoor zruog"
     },
     {
-      "input": {
-        "text": "abcxyz",
-        "shift": 2
-      },
+      "inputs": ["abcxyz", "2"],
       "expected_output": "cdezab"
     }
   ]

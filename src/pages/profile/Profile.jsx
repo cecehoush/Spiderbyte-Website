@@ -50,10 +50,10 @@ function Profile({ onLogout, username, streakData }) {
                     </div>
                     <div className="username-and-tags">
                         <h2 className="username">{username}</h2>
-                        <div className="tags-container">
+                        <div className="tags-container1">
                             <button className="add-tag-button" onClick={handleAddTag}>+</button>
                             {tags.map((tag, index) => (
-                                <div key={index} className="tag">
+                                <div key={index} className="tag1">
                                     {tag}
                                     <button className="remove-tag-button" onClick={() => handleRemoveTag(tag)}>×</button>
                                 </div>

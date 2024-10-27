@@ -95,7 +95,7 @@
     margin: 0 0 10px 0;
 }
 
-.tags-container {
+.tags-container1 {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -122,7 +122,7 @@
     color: #53D597;
 }
 
-.tag {
+.tag1 {
     background-color: #282828;
     color: #FFFFFF;
     padding: 5px 10px;

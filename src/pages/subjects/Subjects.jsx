@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Subjects.css';
+import { Link } from 'react-router-dom';
 
 function Subjects() {
     const [subjects, setSubjects] = useState([]);
@@ -133,45 +134,49 @@ function Subjects() {
             </div>
 
             <div className="bottom-container">
-                {/* Challenges Section */}
-                <div className="challenges-container">
-                    <div className="challenges-label">Challenges:</div>
-                    <div className="challenges-content">
-                        <div className="challenges-header">
-                            <div className="header-item">Daily</div>
-                            <div className="header-item">Name</div>
-                            <div className="header-item">User Attempts</div>
-                            <div className="header-item">User Solved</div>
-                            <div className="header-item">Solved</div>
-                            <div className="header-item">Solution</div>
-                        </div>
+      {/* Challenges Section */}
+      <div className="challenges-container">
+        <div className="challenges-label">Challenges:</div>
+        <div className="challenges-content">
+          <div className="challenges-header">
+            <div className="header-item">Daily</div>
+            <div className="header-item">Name</div>
+            <div className="header-item">User Attempts</div>
+            <div className="header-item">User Solved</div>
+            <div className="header-item">Solved</div>
+            <div className="header-item">Solution</div>
+          </div>
 
-                        <div className="challenges-list">
-                            {currentChallenges.map((challenge) => (
-                                <div key={challenge._id} className="challenge-row">
-                                    <div className="challenge-item">{challenge.daily_question ? "Yes" : "No"}</div>
-                                    <div className="challenge-item">{challenge.challenge_title}</div>
-                                    <div className="challenge-item">{challenge.users_attempted}</div>
-                                    <div className="challenge-item">{challenge.users_solved}</div>
-                                    <div className="challenge-item">{challenge.solved ? "Yes" : "No"}</div>
-                                    <div className="challenge-item">
-                                        <button>View Solution</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="challenges-pagination">
-                            <button onClick={handlePrevChallenges} disabled={currentPage === 0}>
-                                &#10094;
-                            </button>
-                            <button onClick={handleNextChallenges} disabled={(currentPage + 1) * itemsPerPage >= challenges.length}>
-                                &#10095;
-                            </button>
-                        </div>
-                    </div>
+          <div className="challenges-list">
+            {currentChallenges.map((challenge) => (
+              <Link
+                to={`/editor/${challenge._id}`} // Route to the CodeEditorPage with challengeId
+                key={challenge._id}
+                className="challenge-row"
+                style={{ textDecoration: 'none', color: 'inherit' }} // Style to remove default link appearance
+              >
+                <div className="challenge-item">{challenge.daily_question ? "Yes" : "No"}</div>
+                <div className="challenge-item">{challenge.challenge_title}</div>
+                <div className="challenge-item">{challenge.users_attempted}</div>
+                <div className="challenge-item">{challenge.users_solved}</div>
+                <div className="challenge-item">{challenge.solved ? "Yes" : "No"}</div>
+                <div className="challenge-item">
+                  <button>View Solution</button>
                 </div>
+              </Link>
+            ))}
+          </div>
 
+          <div className="challenges-pagination">
+            <button onClick={handlePrevChallenges} disabled={currentPage === 0}>
+              &#10094;
+            </button>
+            <button onClick={handleNextChallenges} disabled={(currentPage + 1) * itemsPerPage >= challenges.length}>
+              &#10095;
+            </button>
+          </div>
+        </div>
+      </div>
                 {/* Tags Section */}
                 <div className="tags-container">
                     <div className="tags-label">Tags:</div>

@@ -117,7 +117,7 @@ function App() {
             )
           } 
         />
-        <Route path="/codeeditor" element={<CodeEditorPage />} />
+        <Route path="/editor/:challengeId" element={<CodeEditorPage />} />
       </Routes>
     </>
   );

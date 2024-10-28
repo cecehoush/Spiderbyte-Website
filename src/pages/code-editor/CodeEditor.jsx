@@ -4,7 +4,7 @@ import './CodeEditor.css';
 
 function CodeEditorPage() {
   const [problemData, setProblemData] = useState(null);
-  const [code, setCode] = useState('// Write your solution here...');
+  const [usercode, setCode] = useState('// Write your solution here...');
   const [testCases, setTestCases] = useState([]);
   const [executionTime, setExecutionTime] = useState(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -33,15 +33,53 @@ function CodeEditorPage() {
       });
   }, []);
 
-  const runCode = () => {
-    setIsPopupVisible(true); // Show the popup with test cases when the button is pressed
-    const startTime = performance.now();
-    setTimeout(() => {
-      const endTime = performance.now();
-      setExecutionTime((endTime - startTime).toFixed(2));
-    }, 500);
-  };
+  const runCode = async () => {
+    try {
+    // Step 1: Extract the function name (assuming the first function defined)
+    const functionNameMatch = usercode.match(/def\s+(\w+)\s*\(([^)]*)\)/);
+    if (!functionNameMatch) {
+      console.error('No valid function found in user code.');
+      return;
+    }
+    
+    const functionName = functionNameMatch[1]; // Get the function name
+    const functionParams = functionNameMatch[2]; // Get the parameter list from the function definition
 
+    // Step 2: Count the number of inputs in the function definition
+    const paramCount = functionParams.split(',').filter(param => param.trim() !== '').length;
+
+    // Step 3: Build the input variables (e.g., input1, input2, ..., inputN)
+    const inputParams = Array.from({ length: paramCount }, (_, i) => `input${i + 1}`).join(", ");
+
+    // Step 4: Append the function call to the user's code
+    const codeWithFunctionCall = `${usercode}\n\nresult = ${functionName}(${inputParams})`;
+
+      console.log(problemData.test_cases);
+      const submissionData = {
+        userid: '-1', // Replace with actual logged-in user's ID, -1 if none
+        usercode: codeWithFunctionCall,
+        test_cases: problemData.test_cases,
+      };
+  
+      const response = await fetch('http://localhost:5000/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(submissionData),
+      });
+  
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Submission sent successfully:', responseData);
+        // You can also update the UI to reflect the submission status
+      } else {
+        const errorText = await response.text();
+        console.error('Failed to send submission:', errorText);
+      }
+    } catch (error) {
+      console.error('Error sending submission:', error);
+    }
+  };
+  
   const openVisualizer = () => {
     setIsVisualizerVisible(true);
   };
@@ -66,7 +104,7 @@ function CodeEditorPage() {
 
   // Function to generate the PythonTutor URL with the user's code
   const generatePythonTutorURL = () => {
-    const encodedCode = encodeURIComponent(code);
+    const encodedCode = encodeURIComponent(usercode);
     return `https://pythontutor.com/iframe-embed.html#code=${encodedCode}&origin=opt-frontend.js&cumulative=false&heapPrimitives=nevernest&textReferences=false&py=3&curInstr=0`;
   };
 
@@ -116,16 +154,16 @@ function CodeEditorPage() {
       </div>
       <div className="editor-container" ref={containerRef}>
         <div className="editor-wrapper">
-          <MonacoEditor
-            language={problemData.skeleton_code.language}
-            value={code}
-            onChange={setCode}
-            editorDidMount={(editor) => {
-              editorRef.current = editor;
-              editor.layout();
-            }}
-            options={{ automaticLayout: false }}
-          />
+        <MonacoEditor
+          language={problemData.skeleton_code.language}
+          value={usercode}
+          onChange={(newValue) => setCode(newValue)} // Update the user's code state with new input
+          editorDidMount={(editor) => {
+            editorRef.current = editor;
+            editor.layout();
+          }}
+          options={{ automaticLayout: false }}
+        />
           {/* Eyeball button for visualizer */}
           <button onClick={openVisualizer} className="eyeball-button">
             <svg viewBox="0 0 24 24">
@@ -136,7 +174,11 @@ function CodeEditorPage() {
             </svg>
           </button>
           {/* Play button */}
-          <button onClick={runCode} className="play-button">
+            <button onClick={() => { 
+              console.log("Play button clicked");
+              runCode();
+            }} 
+            className="play-button">
             <svg viewBox="0 0 24 24">
               <polygon points="5,3 19,12 5,21" fill="#53D597" />
             </svg>

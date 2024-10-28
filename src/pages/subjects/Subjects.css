@@ -280,3 +280,8 @@
 .tag-name {
     flex-grow: 1;
 }
+
+.subject-item.selected {
+    border: 2px solid #4CAF50; /* Customize as needed */
+    background-color: #2c2c2c;
+}

@@ -1,25 +1,47 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Subjects.css';
-import subjectsData from './subjectsData.json';
-import challengesData from './challengesData.json';
-import tagsDataJson from './tagsData.json';
 
 function Subjects() {
     const [subjects, setSubjects] = useState([]);
+    const [challenges, setChallenges] = useState([]);
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState(new Set());
+    const [selectedSubjectName, setSelectedSubjectName] = useState(null); // Use `name` instead of `id`
     const [currentPage, setCurrentPage] = useState(0);
     const scrollContainerRef = useRef(null);
     const itemsPerPage = 10;
-    const scrollAmount = 360; // Width of item (340px) + gap (20px)
+    const scrollAmount = 360;
 
     useEffect(() => {
-        setSubjects(subjectsData);
-        setTags(tagsDataJson.tags.map(tag => ({
-            ...tag,
-            isSelected: false
-        })));
+        // Fetch all subjects
+        fetch('http://localhost:5000/api/subjects')
+            .then((response) => response.json())
+            .then((data) => setSubjects(data))
+            .catch((error) => console.error('Error fetching subjects:', error));
+
+        // Fetch all tags (if needed)
+        fetch('http://localhost:5000/api/tags')
+            .then((response) => response.json())
+            .then((data) => {
+                setTags(data.tags.map(tag => ({
+                    ...tag,
+                    isSelected: false
+                })));
+            })
+            .catch((error) => console.error('Error fetching tags:', error));
     }, []);
+
+    // Function to handle subject selection and fetch associated challenges
+    const handleSubjectClick = (subjectName) => {
+        setSelectedSubjectName(subjectName); // Set selected subject name
+        setCurrentPage(0); // Reset pagination to the first page
+
+        // Fetch challenges related to the selected subject by name
+        fetch(`http://localhost:5000/api/subjects/name/${subjectName}/problems`)
+            .then((response) => response.json())
+            .then((data) => setChallenges(data))
+            .catch((error) => console.error('Error fetching challenges:', error));
+    };
 
     const handleNext = () => {
         if (scrollContainerRef.current) {
@@ -33,9 +55,7 @@ function Subjects() {
         }
     };
 
-    const canScrollLeft = () => {
-        return scrollContainerRef.current && scrollContainerRef.current.scrollLeft > 0;
-    };
+    const canScrollLeft = () => scrollContainerRef.current && scrollContainerRef.current.scrollLeft > 0;
 
     const canScrollRight = () => {
         if (!scrollContainerRef.current) return false;
@@ -43,16 +63,8 @@ function Subjects() {
         return scrollLeft + clientWidth < scrollWidth;
     };
 
-    useEffect(() => {
-        setSubjects(subjectsData);
-        setTags(tagsDataJson.tags.map(tag => ({
-            ...tag,
-            isSelected: false
-        })));
-    }, []);
-
     const handleNextChallenges = () => {
-        if ((currentPage + 1) * itemsPerPage < challengesData.length) {
+        if ((currentPage + 1) * itemsPerPage < challenges.length) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -63,13 +75,13 @@ function Subjects() {
         }
     };
 
-    const currentChallenges = challengesData.slice(
+    const currentChallenges = challenges.slice(
         currentPage * itemsPerPage,
         (currentPage + 1) * itemsPerPage
     );
 
     const handleTagToggle = (tagName) => {
-        setSelectedTags(prev => {
+        setSelectedTags((prev) => {
             const newSelected = new Set(prev);
             if (newSelected.has(tagName)) {
                 newSelected.delete(tagName);
@@ -98,7 +110,11 @@ function Subjects() {
                             ref={scrollContainerRef}
                         >
                             {subjects.map((subject) => (
-                                <div key={subject.id} className='subject-item'>
+                                <div 
+                                    key={subject.name} 
+                                    className={`subject-item ${selectedSubjectName === subject.name ? 'selected' : ''}`}
+                                    onClick={() => handleSubjectClick(subject.name)} // Call handleSubjectClick with name
+                                >
                                     <h3>{subject.name}</h3>
                                     <p>{subject.description}</p>
                                     <img src={subject.image} alt={subject.name} />
@@ -132,11 +148,11 @@ function Subjects() {
 
                         <div className="challenges-list">
                             {currentChallenges.map((challenge) => (
-                                <div key={challenge.question_id} className="challenge-row">
-                                    <div className="challenge-item">{challenge.daily ? "Yes" : "No"}</div>
-                                    <div className="challenge-item">{challenge.question_name}</div>
-                                    <div className="challenge-item">{challenge.user_attempts}</div>
-                                    <div className="challenge-item">{challenge.user_submissions}</div>
+                                <div key={challenge._id} className="challenge-row">
+                                    <div className="challenge-item">{challenge.daily_question ? "Yes" : "No"}</div>
+                                    <div className="challenge-item">{challenge.challenge_title}</div>
+                                    <div className="challenge-item">{challenge.users_attempted}</div>
+                                    <div className="challenge-item">{challenge.users_solved}</div>
                                     <div className="challenge-item">{challenge.solved ? "Yes" : "No"}</div>
                                     <div className="challenge-item">
                                         <button>View Solution</button>
@@ -149,7 +165,7 @@ function Subjects() {
                             <button onClick={handlePrevChallenges} disabled={currentPage === 0}>
                                 &#10094;
                             </button>
-                            <button onClick={handleNextChallenges} disabled={(currentPage + 1) * itemsPerPage >= challengesData.length}>
+                            <button onClick={handleNextChallenges} disabled={(currentPage + 1) * itemsPerPage >= challenges.length}>
                                 &#10095;
                             </button>
                         </div>

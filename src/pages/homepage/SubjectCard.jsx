@@ -1,9 +1,19 @@
 import React from "react";
 import "./Homepage.css";
+import { useNavigate } from "react-router-dom";
+
 
 export default function SubjectCard({ subject }) {
+
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    // Navigate to the subject page and pass subject name as state
+    navigate(`/subjects`, { state: { subjectName: subject.name } });
+  };
+
   return (
-    <a href={`/subject/${subject.id}`} className="subject-card-link">
+    <div className="subject-card-link" onClick={handleCardClick}>
       <div className="subject-card">
         <div className="subject-card-title">
           <h3>{subject.name}</h3>
@@ -17,6 +27,6 @@ export default function SubjectCard({ subject }) {
           alt={subject.name}
         />
       </div>
-    </a>
+    </div>
   );
 }

@@ -10,10 +10,12 @@ function Home({ isLoggedIn, username, streakData }) {
 
     // Fetch subjects (customize based on your requirements)
     useEffect(() => {
-        fetch("/subjects.json")
+      // Fetch all subjects
+      fetch('http://localhost:5000/api/subjects')
           .then((response) => response.json())
-          .then((data) => setSubjects(data));
-    }, []);
+          .then((data) => setSubjects(data))
+          .catch((error) => console.error('Error fetching subjects:', error));
+  }, []);
 
     // Fetch all problems and pick 3 random ones
     useEffect(() => {

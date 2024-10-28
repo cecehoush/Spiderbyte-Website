@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Subjects.css';
 import { Link } from 'react-router-dom';
 
 function Subjects() {
+    const location = useLocation();
     const [subjects, setSubjects] = useState([]);
     const [challenges, setChallenges] = useState([]);
     const [filteredChallenges, setFilteredChallenges] = useState([]);
@@ -15,37 +17,43 @@ function Subjects() {
     const scrollAmount = 360;
 
     useEffect(() => {
-        // Fetch all subjects
+        // Fetch all subjects initially
         fetch('http://localhost:5000/api/subjects')
             .then((response) => response.json())
             .then((data) => setSubjects(data))
             .catch((error) => console.error('Error fetching subjects:', error));
     }, []);
 
+    useEffect(() => {
+        // Check if state has subjectName and set it as selectedSubjectName
+        const subjectNameFromState = location.state?.subjectName;
+        if (subjectNameFromState) {
+            handleSubjectClick(subjectNameFromState);
+        }
+    }, [location.state]);
+
     // Function to handle subject selection and fetch associated challenges
     const handleSubjectClick = (subjectName) => {
         setSelectedSubjectName(subjectName);
-        setCurrentPage(0); // Reset pagination to the first page
+        setCurrentPage(0);
 
-        // Fetch challenges related to the selected subject by name
         fetch(`http://localhost:5000/api/subjects/name/${subjectName}/problems`)
             .then((response) => response.json())
             .then((data) => {
                 setChallenges(data);
-                setFilteredChallenges(data); // Initially set to all challenges
+                setFilteredChallenges(data);
 
-                // Aggregate unique tags from subject_tags and content_tags
                 const uniqueTags = new Set();
                 data.forEach((challenge) => {
                     challenge.subject_tags.forEach(tag => uniqueTags.add(tag));
                     challenge.content_tags.forEach(tag => uniqueTags.add(tag));
                 });
 
-                // Convert Set to array and set it as tags for rendering
                 setTags([...uniqueTags]);
             })
             .catch((error) => console.error('Error fetching challenges:', error));
     };
+
 
     // Filter challenges by selected tags
     const filterChallengesByTags = (challengesList, selectedTags) => {

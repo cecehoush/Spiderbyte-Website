@@ -96,6 +96,7 @@
 }
 
 .tags-container1 {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -120,6 +121,36 @@
 
 .add-tag-button:hover {
     color: #53D597;
+}
+
+.tag-dropdown-container {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tag-dropdown {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: #282828;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 5px 10px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #53D597;
+    border-radius: 5px;
 }
 
 .tag1 {

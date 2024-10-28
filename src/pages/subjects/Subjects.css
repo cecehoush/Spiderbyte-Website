@@ -1,4 +1,4 @@
- .subjects-container {
+.subjects-container {
     padding: 20px;
     height: 45vh;
     width: 95%;
@@ -123,10 +123,10 @@
 
 .bottom-container {
     display: flex;
-    height: 45vh; 
     padding: 10px;
     gap: 10vw;
 }
+
 .challenges-container {
     width: 60%;
     padding: 20px;
@@ -134,14 +134,12 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .challenges-content {
     display: flex;
     flex-direction: column;
-    height: calc(100% - 40px); /* Adjust for label height */
-    overflow: hidden;
+    height: auto; /* Allow height to adapt to content */
 }
 
 .challenges-header {
@@ -166,35 +164,17 @@
 }
 
 .challenges-list {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding-right: 5px;
-    margin-bottom: 10px;
-}
-
-.challenges-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.challenges-list::-webkit-scrollbar-track {
-    background: #2a2a2a;
-    border-radius: 4px;
-}
-
-.challenges-list::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 4px;
-}
-
-.challenges-list::-webkit-scrollbar-thumb:hover {
-    background: #666;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 5px;
+    max-height: none; /* Allow challenges list to grow without scroll */
 }
 
 .challenge-row {
     display: flex;
     justify-content: space-between;
     background-color: #545454;
-    margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -205,32 +185,11 @@
     text-align: center;
 }
 
-.challenges-pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.challenges-pagination button {
-    background-color: #999;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.challenges-pagination button:disabled {
-    background-color: #333;
-    cursor: not-allowed;
-} 
-
 .tags-container {
     width: 30%;
     padding: 20px;
     background-color: #3c3c3c;
     border-radius: 10px;
-    height: 100%;
 }
 
 .tags-grid {
@@ -282,6 +241,6 @@
 }
 
 .subject-item.selected {
-    border: 2px solid #4CAF50; /* Customize as needed */
+    border: 2px solid #4CAF50;
     background-color: #2c2c2c;
 }

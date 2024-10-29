@@ -5,7 +5,7 @@ import './CodeEditor.css';
 
 function CodeEditorPage() {
   const { challengeId } = useParams(); // Get challengeId from route params
-  const [problemData, setProblemData] = useState(null);
+  const [challengeData, setChallengeData] = useState(null);
   const [usercode, setCode] = useState('// Write your solution here...');
   const [testCases, setTestCases] = useState([]);
   const [executionTime, setExecutionTime] = useState(null);
@@ -16,16 +16,16 @@ function CodeEditorPage() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // Fetch problem data based on the challengeId from route
-    fetch(`http://localhost:5000/api/problems/${challengeId}`)
+    // Fetch challenge data based on the challengeId from route
+    fetch(`http://localhost:5000/api/challenges/${challengeId}`)
       .then((response) => response.json())
       .then((data) => {
-        setProblemData(data);
+        setChallengeData(data);
         setCode(data.skeleton_code.code);
         setTestCases(data.test_cases);
         setHintsVisibility(new Array(data.hints ? data.hints.length : 0).fill(false)); // Initialize hints visibility
       })
-      .catch((error) => console.error('Failed to fetch problem data:', error));
+      .catch((error) => console.error('Failed to fetch challenge data:', error));
   }, [challengeId]);
 
   const runCode = async () => {
@@ -49,7 +49,7 @@ function CodeEditorPage() {
       const submissionData = {
         userid: "-1", // Replace with actual logged-in user's ID if applicable
         usercode: codeWithFunctionCall,
-        test_cases: problemData.test_cases,
+        test_cases: challengeData.test_cases,
       };
       
       console.log("Sending submission data:", submissionData);
@@ -97,7 +97,7 @@ function CodeEditorPage() {
     );
   };
 
-  if (!problemData) {
+  if (!challengeData) {
     return <div>Building Web...</div>;
   }
 
@@ -112,27 +112,27 @@ function CodeEditorPage() {
       <div className="description-container">
         <div className="problem-description">
           <div className="section-header">
-            <h2 className="challenge-title">{problemData.challenge_title}</h2>
+            <h2 className="challenge-title">{challengeData.challenge_title}</h2>
           </div>
           <div className="content-section">
-            <p className="description">{problemData.problem_description.description}</p>
+            <p className="description">{challengeData.challenge_description.description}</p>
           </div>
           <div className="content-section">
             <h3 className="sub-section-title">Input Format</h3>
-            <p className="input-format">{problemData.problem_description.input_format}</p>
+            <p className="input-format">{challengeData.challenge_description.input_format}</p>
           </div>
           <div className="content-section">
             <h3 className="sub-section-title">Output Format</h3>
-            <p className="output-format">{problemData.problem_description.output_format}</p>
+            <p className="output-format">{challengeData.challenge_description.output_format}</p>
           </div>
           <div className="content-section">
             <h3 className="sub-section-title">Constraints</h3>
-            <p className="constraints">{problemData.problem_description.constraints}</p>
+            <p className="constraints">{challengeData.challenge_description.constraints}</p>
           </div>
           <div className="hints-section">
             <h3 className="sub-section-title">Hints</h3>
-            {problemData.hints && problemData.hints.length > 0 ? (
-              problemData.hints.map((hint, index) => (
+            {challengeData.hints && challengeData.hints.length > 0 ? (
+              challengeData.hints.map((hint, index) => (
                 <div key={index} className="hint-container">
                   <button
                     className="toggle-hint-button"
@@ -154,7 +154,7 @@ function CodeEditorPage() {
       <div className="editor-container" ref={containerRef}>
         <div className="editor-wrapper">
           <MonacoEditor
-            language={problemData.skeleton_code.language}
+            language={challengeData.skeleton_code.language}
             value={usercode}
             onChange={(newValue) => setCode(newValue)}
             editorDidMount={(editor) => {

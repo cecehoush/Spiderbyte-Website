@@ -19,7 +19,7 @@
   position: relative;
 }
 
-.problem-description {
+.challenge-description {
   padding: 0.5em;
   background-color: #242424;
   border-radius: 8px;
@@ -245,7 +245,7 @@
     margin-bottom: 1rem;
   }
 
-  .problem-description {
+  .challenge-description {
     position: static;
     height: auto;
   }

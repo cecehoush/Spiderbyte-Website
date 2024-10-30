@@ -37,7 +37,7 @@ function Subjects() {
         setSelectedSubjectName(subjectName);
         setCurrentPage(0);
 
-        fetch(`http://localhost:5000/api/subjects/name/${subjectName}/problems`)
+        fetch(`http://localhost:5000/api/subjects/name/${subjectName}/challenges`)
             .then((response) => response.json())
             .then((data) => {
                 setChallenges(data);

@@ -17,6 +17,7 @@
   height: 98%;
   overflow: hidden;
   position: relative;
+  overflow-y: auto; /* Added to make it scrollable */
 }
 
 .challenge-description {

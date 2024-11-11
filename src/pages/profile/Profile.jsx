@@ -10,7 +10,9 @@ function Profile({ onLogout, username, streakData }) {
 
     useEffect(() => {
         // Fetch challenges and aggregate tags from subject_tags and content_tags
-        fetch('http://localhost:5000/api/challenges')
+        fetch('http://localhost:5000/api/challenges', {
+            credentials: 'include', // Include cookies with the request
+        })
             .then((response) => response.json())
             .then((data) => {
                 const uniqueTags = new Set();

@@ -18,7 +18,9 @@ function Subjects() {
 
     useEffect(() => {
         // Fetch all subjects initially
-        fetch('http://localhost:5000/api/subjects')
+        fetch('http://localhost:5000/api/subjects', {
+            credentials: 'include', // Include cookies with the request
+        })
             .then((response) => response.json())
             .then((data) => setSubjects(data))
             .catch((error) => console.error('Error fetching subjects:', error));
@@ -37,7 +39,9 @@ function Subjects() {
         setSelectedSubjectName(subjectName);
         setCurrentPage(0);
 
-        fetch(`http://localhost:5000/api/subjects/name/${subjectName}/challenges`)
+        fetch(`http://localhost:5000/api/subjects/name/${subjectName}/challenges`, {
+            credentials: 'include', // Include cookies with the request
+        }) 
             .then((response) => response.json())
             .then((data) => {
                 setChallenges(data);

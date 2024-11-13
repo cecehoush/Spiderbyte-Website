@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams to get the challengeId
 import MonacoEditor from './CodeEditorWin';
 import './CodeEditor.css';
+import { v4 as uuidv4 } from 'uuid';
 
 function CodeEditorPage() {
   const { challengeId } = useParams(); // Get challengeId from route params
@@ -14,10 +15,68 @@ function CodeEditorPage() {
   const [hintsVisibility, setHintsVisibility] = useState([]); // Track visibility for each hint
   const editorRef = useRef(null);
   const containerRef = useRef(null);
+  const socketRef = useRef(null); // Store socket in ref to persist across renders
+  const [clientId, setClientId] = useState(null);
+  const [sessionId, setSessionId] = useState(null); 
+
+  // Connect to WebSocket server
+  const connectWebSocket = () => {
+    const socket = new WebSocket('ws://localhost:5000');
+
+    socket.onopen = () => {
+      console.log('WebSocket connection established');
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data); // Parse incoming data
+      console.log('Received data:', data);
+      
+      // This is to set the inital clientId
+      if (!clientId) {
+        setClientId(data.clientId); // Update the clientId state
+        console.log("Client Id from the websocket: ", data.clientId);
+      }
+
+      //this is to set the sessionId
+      if (!sessionId) {
+        setSessionId(data.sessionId);
+        console.log("SessionId in code editor:", sessionId)
+      }
+
+      // Assuming the results contain execution time and test case results
+      if (data.results) {
+        setExecutionTime(data.executionTime || null);
+        setTestCases(data.results.testCases || []); // Adjust based on the actual structure of the results
+        setIsPopupVisible(true); // Show test case results popup
+      }
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket connection closed');
+      setClientId(null);
+      setSessionId(null);
+    };
+
+    return socket;
+  };
+
+  // Initialize WebSocket connection on mount
+  useEffect(() => {
+    socketRef.current = connectWebSocket(); // Store socket reference
+
+    // Cleanup function to close WebSocket connection on component unmount
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+    };
+  }, []); // supposed to only run once mount
 
   useEffect(() => {
     // Fetch challenge data based on the challengeId from route
-    fetch(`http://localhost:5000/api/challenges/${challengeId}`)
+    fetch(`http://localhost:5000/api/challenges/${challengeId}`, {
+      credentials: 'include', // Include cookies with the request
+  })
       .then((response) => response.json())
       .then((data) => {
         setChallengeData(data);
@@ -32,7 +91,7 @@ function CodeEditorPage() {
     try {
       console.log("Run code initiated");
       
-      // Step 1: Extract the function name and parameters from user's code
+      // Extract the function name and parameters from user's code
       const functionNameMatch = usercode.match(/def\s+(\w+)\s*\(([^)]*)\)/);
       if (!functionNameMatch) {
         console.error("No valid function found in user code.");
@@ -46,32 +105,38 @@ function CodeEditorPage() {
       const codeWithFunctionCall = `${usercode}\n\nresult = ${functionName}(${inputParams})`;
       
       // Prepare data for submission
-      const submissionData = {
-        userid: "-1", // Replace with actual logged-in user's ID if applicable
+       const submissionData = {
+        userid: -1, // Replace with actual logged-in user's ID if applicable
+        clientId: clientId,
+        sessionId: sessionId,
         usercode: codeWithFunctionCall,
         test_cases: challengeData.test_cases,
       };
       
       console.log("Sending submission data:", submissionData);
   
-      const response = await fetch("http://localhost:5000/api/submissions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submissionData),
-      });
-  
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Submission response data:", responseData);
-        
-        // Assuming the response has test case results and execution time fields
-        setExecutionTime(responseData.executionTime || null);
-        setTestCases(responseData.testCases || []);
-        setIsPopupVisible(true); // Show test case results popup
-      } else {
-        const errorText = await response.text();
-        console.error("Submission failed:", errorText);
-        alert(`Submission error: ${errorText}`);
+      // Create a new XMLHttpRequest object
+      const xhr = new XMLHttpRequest();
+
+      // Configure it: POST-request for the URL /api/submissions
+      xhr.open("POST", "http://localhost:5000/api/submissions", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.withCredentials = true;
+      // Send the request with the data as JSON
+      xhr.send(JSON.stringify(submissionData));
+
+      // Optional: Handle the load event if you want to do something when the request completes
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log("Request sent successfully.");
+        } else {
+          console.error("Request failed with status:", xhr.status);
+        }
+      };
+
+      // Optional: Handle errors
+      xhr.onerror = () => {
+        console.error("Request failed due to a network error.");
       }
     } catch (error) {
       console.error("Error during code submission:", error);

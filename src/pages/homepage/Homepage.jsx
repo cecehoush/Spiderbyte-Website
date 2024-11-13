@@ -11,7 +11,9 @@ function Home({ isLoggedIn, username, streakData }) {
     // Fetch subjects (customize based on your requirements)
     useEffect(() => {
       // Fetch all subjects
-      fetch('http://localhost:5000/api/subjects')
+      fetch('http://localhost:5000/api/subjects', {
+        credentials: 'include', // Include cookies with the request
+    })
           .then((response) => response.json())
           .then((data) => setSubjects(data))
           .catch((error) => console.error('Error fetching subjects:', error));
@@ -19,13 +21,16 @@ function Home({ isLoggedIn, username, streakData }) {
 
     // Fetch all challenges and pick 3 random ones
     useEffect(() => {
-        fetch("http://localhost:5000/api/challenges")
+        fetch("http://localhost:5000/api/challenges", {
+            credentials: 'include', // Include cookies with the request
+        })
             .then((response) => response.json())
             .then((data) => {
                 const randomChallenges = selectRandomChallengess(data, 3);
                 setChallenges(randomChallenges);
             })
             .catch((error) => console.error("Error fetching challenges:", error));
+            
     }, []);
 
     // Helper function to select random items from an array

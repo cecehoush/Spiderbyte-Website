@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Subjects.css';
 import { Link } from 'react-router-dom';
+import { X, Loader } from "lucide-react";
 
 function Subjects() {
     const location = useLocation();
@@ -12,6 +13,13 @@ function Subjects() {
     const [selectedTags, setSelectedTags] = useState(new Set());
     const [selectedSubjectName, setSelectedSubjectName] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [subjectTags, setSubjectTags] = useState([]);
+    const [contentTags, setContentTags] = useState([]);
+    const [selectedSubjectTags, setSelectedSubjectTags] = useState([]);
+    const [selectedContentTags, setSelectedContentTags] = useState([]);
+    const [difficulty, setDifficulty] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
     const scrollContainerRef = useRef(null);
     const itemsPerPage = 10;
     const scrollAmount = 360;
@@ -31,6 +39,38 @@ function Subjects() {
             handleSubjectClick(subjectNameFromState);
         }
     }, [location.state]);
+
+    const togglePopup = async () => {
+        setIsPopupOpen(true);
+        setIsLoading(true); // Show loader immediately
+        if (!isPopupOpen) {
+            try {
+                const response = await fetch('http://localhost:5000/api/subjects'); // Use the proxy
+                const data = await response.json();
+                const subjectNames = data.map(subject => subject.name);
+                setSubjectTags(subjectNames);
+                const tagResponse = await fetch('http://localhost:5000/api/tags');
+                const tagData = await tagResponse.json();
+                const tagNames = tagData.map(tag => tag.name);
+                setContentTags(tagNames);
+            } catch (error) {
+                console.error('Error fetching Subject or Content tags:', error);
+            } finally {
+                setIsLoading(false); // Hide loader after data is fetched
+            }
+        } else {
+            setIsPopupOpen(false);
+        }
+    };
+
+    const handleSearch = () => {
+        setIsLoading(true);
+        // Perform search logic here
+        setTimeout(() => {
+            setIsLoading(false);
+            setIsPopupOpen(false);
+        }, 2000); // Simulate loading time
+    };
 
     // Function to handle subject selection and fetch associated challenges
     const handleSubjectClick = (subjectName) => {
@@ -121,9 +161,15 @@ function Subjects() {
 
     return (
         <div>
+
             <div className='subjects-container'>
                 <div className='subjects-box'>
                     <div className='subjects-label'>Subjects:</div>
+                <div className="find-challenge-container">
+                            <button className="find-challenge-button" onClick={togglePopup}>
+                                Find a Challenge
+                            </button>
+                        </div>
                     <div className='subjects-carousel'>
                         <button 
                             className='arrow left' 
@@ -155,6 +201,7 @@ function Subjects() {
                         >
                             &#10095;
                         </button>
+
                     </div>
                 </div>
             </div>
@@ -222,6 +269,65 @@ function Subjects() {
                     </div>
                 </div>
             </div>
+
+            {isPopupOpen && (
+                <div className="popup-overlay">
+                    <div className="popup">
+                        <button className="close-button" onClick={togglePopup}>
+                            <X size={24} />
+                        </button>
+                        <h2>Find a Challenge</h2>
+                        {isLoading ? (
+                            <Loader size={48} className="loader" />
+                        ) : (
+                            <>
+                                <div className="tags-section">
+                                    <h3>Subject Tags</h3>
+                                    {subjectTags.map((tag) => (
+                                        <button
+                                            key={tag}
+                                            className={`tag-button ${selectedSubjectTags.includes(tag) ? "selected" : ""}`}
+                                            onClick={() => setSelectedSubjectTags((prev) =>
+                                                prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+                                            )}
+                                        >
+                                            {tag}
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="tags-section">
+                                    <h3>Content Tags</h3>
+                                    {contentTags.map((tag) => (
+                                        <button
+                                            key={tag}
+                                            className={`tag-button ${selectedContentTags.includes(tag) ? "selected" : ""}`}
+                                            onClick={() => setSelectedContentTags((prev) =>
+                                                prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+                                            )}
+                                        >
+                                            {tag}
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="difficulty-section">
+                                    <h3>Difficulty</h3>
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="10"
+                                        value={difficulty}
+                                        onChange={(e) => setDifficulty(e.target.value)}
+                                    />
+                                    <span>{difficulty}</span>
+                                </div>
+                                <button className="search-button" onClick={handleSearch}>
+                                    Search
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -63,6 +63,20 @@ nav {
   margin-left: -5%;
 }
 
+.links button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.links button.active {
+  color: #53d597;
+}
+
 .challengeButton {
   background-color: #151717;
   padding: 0.5rem 1rem;
@@ -289,4 +303,75 @@ a {
 
 body {
   padding-top: 60px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.popup {
+  background-color: #3e3e3e;
+  padding: 2rem;
+  border-radius: 10px;
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.tags-section {
+  margin-bottom: 1.5rem;
+}
+
+.tag-button {
+  background-color: #545454;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.tag-button.selected {
+  background-color: #53d597;
+  color: #ffffff;
+}
+
+.difficulty-section {
+  margin-bottom: 1.5rem;
+}
+
+.search-button {
+  background-color: #53d597;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+}
+
+.loader {
+  margin-top: 2rem;
+  color: #ffffff;
 }

@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Auth.css';
+import axios from 'axios';
 
 function LoginSignup({ onLogin, onSignup }) {
     const location = useLocation();
     const isLogin = location.pathname === '/login';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (isLogin) {
-            onLogin(username, password);
-        } else {
-            onSignup(username, password);
+        setError('');
+        try {
+            if (isLogin) {
+                const response = await axios.post('http://localhost:5000/api/users/signin', { username, password });
+                onLogin(response.data);
+            } else {
+                const response = await axios.post('http://localhost:5000/api/users/signup', { username, password });
+                onSignup(response.data);
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || 'An error occurred. Please try again.');
         }
     };
 
@@ -21,6 +30,7 @@ function LoginSignup({ onLogin, onSignup }) {
         <div className="auth-page-container">
             <div className="login-signup-container">
                 <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+                {error && <p className="error-message">{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"

@@ -45,6 +45,7 @@ function CodeEditorPage() {
 
       // Assuming the results contain execution time and test case results
       if (data.results) {
+        console.log("RESULTS", data.results);
         setExecutionTime(data.executionTime || null);
         setTestCases(data.results.testCases || []); // Adjust based on the actual structure of the results
         setIsPopupVisible(true); // Show test case results popup

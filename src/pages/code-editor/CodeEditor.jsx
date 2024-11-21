@@ -2,22 +2,22 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams to get the challengeId
 import MonacoEditor from './CodeEditorWin';
 import './CodeEditor.css';
-import { v4 as uuidv4 } from 'uuid';
 
 function CodeEditorPage() {
   const { challengeId } = useParams(); // Get challengeId from route params
   const [challengeData, setChallengeData] = useState(null);
   const [usercode, setCode] = useState('// Write your solution here...');
   const [testCases, setTestCases] = useState([]);
-  const [executionTime, setExecutionTime] = useState(null);
+  const [executionTime, setExecutionTime] = useState([]);
+  const [resultString, setResultString] = useState(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isVisualizerVisible, setIsVisualizerVisible] = useState(false);
   const [hintsVisibility, setHintsVisibility] = useState([]); // Track visibility for each hint
   const editorRef = useRef(null);
   const containerRef = useRef(null);
   const socketRef = useRef(null); // Store socket in ref to persist across renders
-  const [clientId, setClientId] = useState(null);
-  const [sessionId, setSessionId] = useState(null); 
+  const clientIdRef = useRef(null); // Store clientId in ref
+  const sessionIdRef = useRef(null); // Store sessionId in ref
 
   // Connect to WebSocket server
   const connectWebSocket = () => {
@@ -31,30 +31,28 @@ function CodeEditorPage() {
       const data = JSON.parse(event.data); // Parse incoming data
       console.log('Received data:', data);
       
-      // This is to set the inital clientId
-      if (!clientId) {
-        setClientId(data.clientId); // Update the clientId state
+      if (!clientIdRef.current) {
+        clientIdRef.current = data.clientId; // Store the clientId in the ref
+        localStorage.setItem('clientId', data.clientId); // Save to localStorage
         console.log("Client Id from the websocket: ", data.clientId);
       }
 
-      //this is to set the sessionId
-      if (!sessionId) {
-        setSessionId(data.sessionId);
-        console.log("SessionId in code editor:", sessionId)
+      if (!sessionIdRef.current) {
+        sessionIdRef.current = data.sessionId; // Store the sessionId in the ref
+        localStorage.setItem('sessionId', data.sessionId); // Save to localStorage
+        console.log("SessionId in code editor:", sessionIdRef.current);
       }
 
       // Assuming the results contain execution time and test case results
       if (data.results) {
-        setExecutionTime(data.executionTime || null);
-        setTestCases(data.results.testCases || []); // Adjust based on the actual structure of the results
+        console.log("RESULTS", data.results);
+        setResultString(data.results || "NA");
         setIsPopupVisible(true); // Show test case results popup
       }
     };
 
     socket.onclose = () => {
       console.log('WebSocket connection closed');
-      setClientId(null);
-      setSessionId(null);
     };
 
     return socket;
@@ -107,8 +105,8 @@ function CodeEditorPage() {
       // Prepare data for submission
        const submissionData = {
         userid: -1, // Replace with actual logged-in user's ID if applicable
-        clientId: clientId,
-        sessionId: sessionId,
+        clientId: clientIdRef.current, // Use ref value
+        sessionId: sessionIdRef.current, // Use ref value
         usercode: codeWithFunctionCall,
         test_cases: challengeData.test_cases,
       };
@@ -252,21 +250,8 @@ function CodeEditorPage() {
               <button className="close-button" onClick={closePopup}>
                 ✖
               </button>
-              <h3>Test Cases</h3>
-              <ul>
-                {testCases.map((testCase, index) => (
-                  <li key={index}>
-                    <strong>Input:</strong> {JSON.stringify(testCase.inputs)} |{' '}
-                    <strong>Expected Output:</strong> {testCase.expected_output} |{' '}
-                    <strong>Result:</strong> {testCase.result}
-                  </li>
-                ))}
-              </ul>
-              {executionTime && (
-                <p>
-                  <strong>Execution Time:</strong> {executionTime} ms
-                </p>
-              )}
+              <h3>Results:</h3>
+              <h4> {resultString} </h4>
             </div>
           </div>
         )}

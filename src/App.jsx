@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import axios from 'axios';
 import "./App.css";
 import Nav from "./components/nav/Nav.jsx";
 import Home from "./pages/homepage/Homepage.jsx";
@@ -11,9 +12,6 @@ import CodeEditorPage from "./pages/code-editor/CodeEditor.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [users, setUsers] = useState([
-    { username: 'user', password: 'password123' } // Our default user, until we have the auth more integrated. Only for testing purposes!
-  ]);
   const navigate = useNavigate();
 
     // Generate placeholder data for 3 weeks (active vs. inactive)
@@ -30,34 +28,18 @@ function App() {
     }
   }, []);
 
-  const handleSignup = (username, password) => {
-    if (users.some((user) => user.username === username)) {
-      alert("Username already exists");
-      return false;
-    }
-    const newUsers = [...users, { username, password }];
-    setUsers(newUsers);
+  const handleSignup = (userData) => {
     setIsLoggedIn(true);
     localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("username", username);
+    localStorage.setItem("username", userData.username);
     navigate("/profile");
-    return true;
   };
 
-  const handleLogin = (username, password) => {
-    const user = users.find(
-      (user) => user.username === username && user.password === password
-    );
-    if (user) {
-      setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("username", username);
-      navigate("/profile");
-      return true;
-    } else {
-      alert("Invalid username or password");
-      return false;
-    }
+  const handleLogin = (userData) => {
+    setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("username", userData.username);
+    navigate("/profile");
   };
 
   const handleLogout = () => {

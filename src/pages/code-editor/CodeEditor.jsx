@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'; // Import useParams to get the cha
 import MonacoEditor from './CodeEditorWin';
 import './CodeEditor.css';
 
-function CodeEditorPage() {
+function CodeEditorPage({ isLoggedIn, username, userid }) {
+  console.log("User ID:", userid); // Log the userid to verify it's being passed correctly
   const { challengeId } = useParams(); // Get challengeId from route params
   const [challengeData, setChallengeData] = useState(null);
   const [usercode, setCode] = useState('// Write your solution here...');
@@ -101,14 +102,18 @@ function CodeEditorPage() {
       const paramCount = functionParams.split(",").filter(param => param.trim() !== "").length;
       const inputParams = Array.from({ length: paramCount }, (_, i) => `input${i + 1}`).join(", ");
       const codeWithFunctionCall = `${usercode}\n\nresult = ${functionName}(${inputParams})`;
-      
+      console.log(userid);
       // Prepare data for submission
+      console.log(challengeData.challenge_title);
        const submissionData = {
-        userid: -1, // Replace with actual logged-in user's ID if applicable
+        userid: userid, // Replace with actual logged-in user's ID if applicable
         clientId: clientIdRef.current, // Use ref value
         sessionId: sessionIdRef.current, // Use ref value
-        usercode: codeWithFunctionCall,
+        code: codeWithFunctionCall,
         test_cases: challengeData.test_cases,
+        challenge_name: challengeData.challenge_title,
+        challengeId: challengeData._id, 
+        language: 'Python'
       };
       
       console.log("Sending submission data:", submissionData);

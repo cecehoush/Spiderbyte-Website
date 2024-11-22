@@ -32,13 +32,17 @@ function App() {
     setIsLoggedIn(true);
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("username", userData.username);
+    localStorage.setItem("userid", userData._id);
     navigate("/profile");
   };
 
   const handleLogin = (userData) => {
     setIsLoggedIn(true);
+    console.log(userData);
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("username", userData.username);
+    localStorage.setItem("userid", userData._id);
+    console.log(userData._id);
     navigate("/profile");
   };
 
@@ -46,8 +50,12 @@ function App() {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("username");
+    localStorage.removeItem("userid");
     navigate("/");
   };
+
+  const userid = localStorage.getItem("userid");
+  console.log("Passing User ID:", userid); // Log the userid to verify it's being passed correctly
 
   return (
     <>
@@ -99,7 +107,10 @@ function App() {
             )
           } 
         />
-        <Route path="/editor/:challengeId" element={<CodeEditorPage />} />
+        <Route 
+          path="/editor/:challengeId" 
+          element={<CodeEditorPage isLoggedIn={isLoggedIn} username={localStorage.getItem("username")} userid={userid} />} 
+        />
       </Routes>
     </>
   );

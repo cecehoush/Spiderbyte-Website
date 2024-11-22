@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import catImage from '../../assets/cat.jpg';
 
-function Profile({ onLogout, username, streakData }) {
+function Profile({ onLogout, username, streakData, userid }) {
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [showTagOptions, setShowTagOptions] = useState(false);
+    const [solvedChallenges, setSolvedChallenges] = useState([]);
+    const [challengeCounts, setChallengeCounts] = useState({ easy: 0, medium: 0, hard: 0 });
     const dropdownRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch challenges and aggregate tags from subject_tags and content_tags
@@ -24,6 +28,29 @@ function Profile({ onLogout, username, streakData }) {
             })
             .catch((error) => console.error('Error fetching tags:', error));
     }, []);
+
+    useEffect(() => {
+        // Fetch solved challenges
+        fetch(`http://localhost:5000/api/submissions/user/${userid}`, {
+            credentials: 'include', // Include cookies with the request
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setSolvedChallenges(data);
+                const counts = { easy: 0, medium: 0, hard: 0 };
+                data.forEach((challenge) => {
+                    if (challenge.challenge_difficulty >= 1 && challenge.challenge_difficulty <= 3) {
+                        counts.easy++;
+                    } else if (challenge.challenge_difficulty >= 4 && challenge.challenge_difficulty <= 7) {
+                        counts.medium++;
+                    } else if (challenge.challenge_difficulty >= 8 && challenge.challenge_difficulty <= 10) {
+                        counts.hard++;
+                    }
+                });
+                setChallengeCounts(counts);
+            })
+            .catch((error) => console.error('Error fetching solved challenges:', error));
+    }, [userid]);
 
     const handleAddTag = () => {
         setShowTagOptions(!showTagOptions);
@@ -54,14 +81,33 @@ function Profile({ onLogout, username, streakData }) {
         };
     }, []);
 
+    const handleChallengeClick = (challenge) => {
+        fetch(`http://localhost:5000/api/challenges/name/${challenge.challenge_name}`, {
+            credentials: 'include',
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Remove the last line from the code before passing it
+                const codeLines = challenge.code.split('\n');
+                const codeWithoutLastLine = codeLines.slice(0, -1).join('\n');
+                
+                navigate(`/editor/${data._id}`, { 
+                    state: { 
+                        code: codeWithoutLastLine
+                    } 
+                });
+            })
+            .catch((error) => console.error('Error fetching challenge:', error));
+    };
+
     return (
         <div className="profile-container">
             <div className="stats-container">
                 <div className="stat-box">
                     <h3>Completed Challenges:</h3>
-                    <p>Easy: 15</p>
-                    <p>Medium: 24</p>
-                    <p>Hard: 69</p>
+                    <p>Easy: {challengeCounts.easy}</p>
+                    <p>Medium: {challengeCounts.medium}</p>
+                    <p>Hard: {challengeCounts.hard}</p>
                 </div>
                 <div className="stat-box">
                     <h3>Completed Subjects:</h3>
@@ -123,9 +169,18 @@ function Profile({ onLogout, username, streakData }) {
                 </div>
             </div>
             <div className="bottom-boxes-container">
-                <div className="bottom-box recent-activity">
-                    <h3 className="box-title">Recent Activity:</h3>
-                    {/* Add content for Recent Activity here */}
+
+                <div className="bottom-box solved-challenges">
+                    <h3 className="box-title">Solved Challenges:</h3>
+                    <ul>
+                        {solvedChallenges.map((challenge, index) => (
+                            <li key={index} onClick={() => handleChallengeClick(challenge)}>
+                                <p>Challenge: {challenge.challenge_name}</p>
+                                <p>Execution Time: {challenge.execution_time_ms}ms</p>
+                                <p>Date: {new Date(challenge.submitted_at).toLocaleDateString()}</p>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
                 <div className="bottom-box playlists">
                     <h3 className="box-title">Playlists:</h3>

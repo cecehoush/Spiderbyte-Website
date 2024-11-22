@@ -238,6 +238,13 @@
     box-shadow: 0 4px 4px 4px rgba(255, 255, 255, 0.25);
     position: relative;
     min-height: 200px; 
+    max-height: 300px; /* Set a fixed height */
+    overflow-y: auto; /* Make contents scrollable */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.bottom-box::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
 }
 
 .box-title {
@@ -295,6 +302,35 @@
 .logout-button:hover {
     background-color: #e81111;
     color: white;
+}
+
+.solved-challenges ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: 250px; /* Set a fixed height for the list */
+    overflow-y: auto; /* Make list scrollable */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.solved-challenges ul::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.solved-challenges li {
+    background-color: #282828;
+    color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer; /* Add this line */
+}
+
+.solved-challenges li:hover {
+    cursor: pointer; /* Add this block */
+}
+
+.solved-challenges p {
+    margin: 5px 0;
 }
 
 @media (max-width: 768px) {

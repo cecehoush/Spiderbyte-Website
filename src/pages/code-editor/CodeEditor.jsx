@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams to get the challengeId
+import { useParams, useLocation } from 'react-router-dom'; // Import useLocation to get the state
 import MonacoEditor from './CodeEditorWin';
 import './CodeEditor.css';
 
 function CodeEditorPage({ isLoggedIn, username, userid }) {
   console.log("User ID:", userid); // Log the userid to verify it's being passed correctly
   const { challengeId } = useParams(); // Get challengeId from route params
+  const location = useLocation(); // Get location to access state
   const [challengeData, setChallengeData] = useState(null);
-  const [usercode, setCode] = useState('// Write your solution here...');
+  // Prioritize code from submission state
+  const [usercode, setCode] = useState(location.state?.code || '// Write your solution here...'); // Use code from state if available
   const [testCases, setTestCases] = useState([]);
   const [executionTime, setExecutionTime] = useState([]);
   const [resultString, setResultString] = useState(null);
@@ -79,12 +81,15 @@ function CodeEditorPage({ isLoggedIn, username, userid }) {
       .then((response) => response.json())
       .then((data) => {
         setChallengeData(data);
-        setCode(data.skeleton_code.code);
+        // Only set skeleton code if we don't have submission code
+        if (!location.state?.code) {
+          setCode(data.skeleton_code.code); // Populate usercode with challenge's skeleton code if state code is not available
+        }
         setTestCases(data.test_cases);
         setHintsVisibility(new Array(data.hints ? data.hints.length : 0).fill(false)); // Initialize hints visibility
       })
       .catch((error) => console.error('Failed to fetch challenge data:', error));
-  }, [challengeId]);
+  }, [challengeId, location.state?.code]);
 
   const runCode = async () => {
     try {
@@ -112,6 +117,7 @@ function CodeEditorPage({ isLoggedIn, username, userid }) {
         code: codeWithFunctionCall,
         test_cases: challengeData.test_cases,
         challenge_name: challengeData.challenge_title,
+        challenge_difficulty: challengeData.challenge_difficulty,
         challengeId: challengeData._id, 
         language: 'Python'
       };

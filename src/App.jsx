@@ -54,9 +54,6 @@ function App() {
     navigate("/");
   };
 
-  const userid = localStorage.getItem("userid");
-  console.log("Passing User ID:", userid); // Log the userid to verify it's being passed correctly
-
   return (
     <>
       <Nav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
@@ -80,6 +77,7 @@ function App() {
                 onLogout={handleLogout}
                 username={localStorage.getItem("username")}
                 streakData={streakData}
+                userid={localStorage.getItem("userid")}
               />
             ) : (
               <Navigate to="/login" replace />
@@ -109,7 +107,7 @@ function App() {
         />
         <Route 
           path="/editor/:challengeId" 
-          element={<CodeEditorPage isLoggedIn={isLoggedIn} username={localStorage.getItem("username")} userid={userid} />} 
+          element={<CodeEditorPage isLoggedIn={isLoggedIn} username={localStorage.getItem("username")} userid={localStorage.getItem("userid")} />} 
         />
       </Routes>
     </>

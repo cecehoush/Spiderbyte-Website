@@ -1,0 +1,285 @@
+.subjects-grid-container {
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    margin: 2vh, auto;
+    width: 100%;
+    padding: 0 2vw;
+    max-width: 50vw;
+    margin-top: 2vh;
+}
+
+.subjects-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    width: 25vw;
+}
+
+.subject-wrapper {
+    width: 100%;
+}
+
+.subject-card {
+    background-color: #545454;
+    outline: 1px solid #5AB881;
+    border-radius: 15px;
+    width: 23vw;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vh 1vw;
+    display: flex;
+    height: auto;
+}
+
+.subject-card-title {
+    background-color: #1F1D1D;
+    text-align: center;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0vh 3vw; 
+    font-size: 1.15rem; 
+    width: auto; 
+    font-weight: bold;
+    line-height: .5;
+
+}
+
+.subject-card-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.subject-card-description {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.subject-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.subject-card:hover {
+    background-color: #5AB881;
+    outline: 1px solid #545454;
+}
+
+.subjects-for-you {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 55vw;
+    align-items: center;
+    background-color: #3C3C3C;
+    border-radius: 15px;
+    position: absolute;
+    margin: 2vh 2vw;
+    padding: 1vh 0; 
+}
+
+.subjects-for-you-title {
+    background-color: #1F1D1D;
+    text-align: center;
+    border-radius: 15px;
+    justify-content: center;
+    padding: 0vh 8vw; 
+    font-size: .75rem; 
+    color: white;
+    display: inline-block;
+    width: auto;
+    flex-direction: column;
+    line-height: .5;
+    align-items: start;
+}
+
+.profile-stats{
+    position: absolute;
+    width: 38vw;
+    background-color: #3C3C3C;
+    height: 40vh;
+    margin: 2vh 59vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 15px;
+    padding: 1vh 0; 
+}
+
+.profile-stats-title {
+    background-color: #1F1D1D;
+    text-align: center;
+    border-radius: 15px;
+    justify-content: center;
+    padding: 0.1vh 3vw; 
+    font-size: .75rem; 
+    color: white;
+    display: inline-block;
+    width: fit-content;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    line-height: .5;
+
+}
+
+
+.profile-stats-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1vh 0; 
+}
+
+.profile-stats-button{
+    background-color: #1F1D1D;
+    border-radius: 15px;
+    padding: 0.5vh 1vw;
+    color: white;
+    font-size: 1rem;
+    margin: 1vh 0;
+    display: inline-block;
+    width: auto;
+    flex-direction: column;
+    align-items: start;
+    height: auto;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 3vh 0;
+}
+.profile-description-wrapper {
+    display: flex;
+    justify-content: space-between; /* Aligns description and streak on the same line */
+    align-items: center; /* Aligns items vertically in the middle */
+    width: 100%; /* Ensure it takes up full width */
+    padding: 0.5vh 1vw;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+
+.profile-description {
+    text-align: center;
+    flex-grow: 1; /* This ensures the description takes up the remaining space */
+    margin: 0; /* Remove default margin */
+}
+
+.variable-color {
+    color: #5AB881;
+    font-weight: bold;
+    display: inline;
+}
+
+.profile-stats-streak {
+    font-size: 3.2rem;
+    color: #5AB881;
+    font-weight: bold;
+    margin: 0 8vw;
+    letter-spacing: -.5vw;
+}
+
+.profile-stats-button:active {
+    background-color: #5AB881;
+    outline: 1px solid #545454;
+}
+
+.profile-stats-button:hover {
+    background-color: #5AB881;
+    outline: 1px solid #545454;
+}
+
+.trending-challenges{
+    position: absolute;
+    width: 38vw;
+    background-color: #3C3C3C;
+    height: 50vh;
+    border-radius: 15px;
+    margin: 48vh 59vw;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1vh 0; 
+}
+
+.trending-challenges-title{
+    background-color: #1F1D1D;
+    text-align: center;
+    border-radius: 15px;
+    justify-content: center;
+    padding: 0.1vh 3vw; 
+    font-size: .75rem; 
+    color: white;
+    display: inline-block;
+    width: auto;
+    flex-direction: column;
+    align-items: start;
+    line-height: .5;
+
+}
+
+
+.challenge-card-title{
+    text-align: center;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5vh 1vw; 
+    font-size: .75rem; 
+    width: auto;
+    color: black;
+    line-height: .5;
+
+
+}
+.streak-grid-container-homepage {
+    background-color: #1F1D1D;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    margin: 2vh auto;
+}
+
+.challenge-card{
+    background-color: #D9D9D9;
+    border-radius: 16.5px;
+    width: 30vw;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    height: auto;
+    box-shadow: 0px 3px 3px #5EAD79;
+}
+
+.challenges-grid{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 2vh;
+    margin-top: 2vh;
+    justify-items: top;
+    align-items: start;
+    grid-auto-flow: dense;
+}
+
+.challenge-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.challenge-card:hover {
+    background-color: #5AB881;
+    outline: 1px solid #545454;
+}

@@ -1,0 +1,364 @@
+.profile-container {
+    padding: 30px;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 70px;
+}
+
+.stat-box {
+    background-color: #3C3C3C;
+    padding: 10px 10px 10px 10px;
+    border-radius: 22px;
+    box-shadow: 0 4px 4px 4px rgba(255, 255, 255, 0.25);
+}
+
+.stat-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.stat-box p {
+    margin: 5px 0;
+}
+
+.large-number {
+    font-size: 40px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.user-info-and-streak {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between; 
+}
+
+.user-info {
+    display: flex;
+    align-items: flex-start;
+    flex: 0 1 auto; 
+    max-width: calc(50% - 10px); 
+    min-width: 300px;
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    margin-left: 40px;
+    margin-bottom: 40px;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 9px;
+}
+
+.edit-profile-button {
+    background-color: #D9D9D9;
+    color: black;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.edit-profile-button:hover {
+    background-color: #BFBFBF;
+}
+
+.username-and-tags {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.username {
+    font-size: 32px;
+    color: #FFFFFF;
+    margin: 0 0 10px 0;
+}
+
+.tags-container1 {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.add-tag-button {
+    width: 30px;
+    height: 30px;
+    background-color: #282828;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-tag-button:hover {
+    color: #53D597;
+}
+
+.tag-dropdown-container {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tag-dropdown {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: #282828;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 5px 10px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #53D597;
+    border-radius: 5px;
+}
+
+.tag1 {
+    background-color: #282828;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.remove-tag-button {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-tag-button:hover {
+    color: #FF0000;
+}
+
+.streak-calendar {
+    flex: 0 1 auto; 
+    min-width: 300px;
+    margin-right: 100px;
+    margin-bottom: 40px;
+}
+
+.streak-calendar h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+    font-size: 24px;
+}
+
+.streak-grid-container {
+    background-color: #1F1D1D;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+}
+
+.streak-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;  
+}
+
+.streak-day {
+    width: 40px;  
+    height: 40px;  
+    border-radius: 6px;  
+    transition: transform 0.2s ease-in-out;
+}
+
+.streak-day:hover {
+    transform: scale(1.1);
+}
+
+.streak-day.inactive { background-color: #CBD3D3; }
+.streak-day.active { background-color: #53D597; }
+
+.bottom-boxes-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 25px;
+}
+
+.bottom-box {
+    flex: 1;
+    background-color: #3C3C3C;
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow: 0 4px 4px 4px rgba(255, 255, 255, 0.25);
+    position: relative;
+    min-height: 200px; 
+    max-height: 300px; /* Set a fixed height */
+    overflow-y: auto; /* Make contents scrollable */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.bottom-box::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.box-title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1F1D1D;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 18px;
+    color: #FFFFFF;
+    margin: 0;
+    display: inline-block;
+}
+
+.playlists {
+    position: relative;
+}
+
+.add-playlist-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #1F1D1D;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-playlist-button:hover {
+    color: #53D597;
+}
+
+.logout-button {
+    background-color: #53D597;
+    color: black;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.logout-button:hover {
+    background-color: #e81111;
+    color: white;
+}
+
+.solved-challenges ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: 250px; /* Set a fixed height for the list */
+    overflow-y: auto; /* Make list scrollable */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.solved-challenges ul::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.solved-challenges li {
+    background-color: #282828;
+    color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer; /* Add this line */
+}
+
+.solved-challenges li:hover {
+    cursor: pointer; /* Add this block */
+}
+
+.solved-challenges p {
+    margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+    .user-info-and-streak {
+        justify-content: center; 
+    }
+
+    .streak-calendar {
+        margin-right: 0; 
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 340px;  
+    }
+
+    .bottom-boxes-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .streak-day {
+        width: 30px;  
+        height: 30px;
+    }
+    
+    .streak-grid {
+        gap: 8px;  
+    }
+}

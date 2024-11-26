@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import catImage from '../../assets/cat.jpg';
-import ReactDOM from 'react-dom';
 
 function Profile({ onLogout, username, streakData, userid }) {
     const [tags, setTags] = useState([]);

@@ -157,23 +157,25 @@ function Profile({ onLogout, username, streakData, userid }) {
                     <div className="username-and-tags">
                         <h2 className="username">{username}</h2>
                         <div className="tags-container1">
-                            <button className="add-tag-button" onClick={handleAddTag}>+</button>
-                            {showTagOptions && (
-                                <div ref={dropdownRef} className="tag-dropdown">
-                                    {tags.map((tag, index) => (
-                                        <div key={index} onClick={() => handleTagSelect(tag)} className="dropdown-item">
-                                            {tag}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            {selectedTags.map((tag, index) => (
-                                <div key={index} className="tag1">
+                        <button className="add-tag-button" onClick={handleAddTag}>+</button>
+                        {selectedTags.map((tag, index) => (
+                            <div key={index} className="tag1">
+                                {tag}
+                                <button className="remove-tag-button" onClick={() => handleRemoveTag(tag)}>×</button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {showTagOptions && (
+                        <div ref={dropdownRef} className="tag-dropdown">
+                            {tags.map((tag, index) => (
+                                <div key={index} onClick={() => handleTagSelect(tag)} className="dropdown-item">
                                     {tag}
-                                    <button className="remove-tag-button" onClick={() => handleRemoveTag(tag)}>×</button>
                                 </div>
                             ))}
                         </div>
+                    )}
+
                     </div>
                 </div>
                 <div className="streak-calendar">

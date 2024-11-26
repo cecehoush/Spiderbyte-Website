@@ -259,7 +259,7 @@
     color: #FFFFFF;
     margin: 0;
     display: inline-block;
-    z-index: 2;
+    z-index: 0;
 }
 
 .playlists {
@@ -281,7 +281,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 0;
 }
 
 .add-playlist-button:hover {

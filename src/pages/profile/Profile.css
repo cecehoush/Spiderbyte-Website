@@ -306,33 +306,44 @@
     color: white;
 }
 
-.solved-challenges ul {
-    list-style-type: none;
-    padding: 0;
-    max-height: 250px; /* Set a fixed height for the list */
-    overflow-y: auto; /* Make list scrollable */
-    scrollbar-width: none; /* For Firefox */
+.solved-container {
+    margin-top: 50px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.solved-challenges ul::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-}
-
-.solved-challenges li {
+.solved-card {
     background-color: #282828;
-    color: #FFFFFF;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
-    margin-bottom: 10px;
-    cursor: pointer; /* Add this line */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 0;
 }
 
-.solved-challenges li:hover {
-    cursor: pointer; /* Add this block */
+.solved-card:hover {
+    transform: scale(1.02);
 }
 
-.solved-challenges p {
-    margin: 5px 0;
+.solved-title {
+    color: #FFFFFF;
+    margin: 0 0 8px 0;
+    font-size: 16px;
+}
+
+.solved-details {
+    color: #CBD3D3;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.solved-date {
+    color: #53D597;
+    margin: 0;
+    font-size: 12px;
 }
 
 @media (max-width: 768px) {

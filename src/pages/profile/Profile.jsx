@@ -194,15 +194,19 @@ function Profile({ onLogout, username, streakData, userid }) {
             <div className="bottom-boxes-container">
                 <div className="bottom-box solved-challenges">
                     <h3 className="box-title">Solved Challenges:</h3>
-                    <ul>
-                        {solvedChallenges.filter(challenge => challenge.valid_solution).map((challenge, index) => (
-                            <li key={index} onClick={() => handleChallengeClick(challenge)}>
-                                <p>Challenge: {challenge.challenge_name}</p>
-                                <p>Execution Time: {challenge.execution_time_ms}ms</p>
-                                <p>Date: {new Date(challenge.submitted_at).toLocaleDateString()}</p>
-                            </li>
+                    <div className="solved-container">
+                        {solvedChallenges.map((challenge, index) => (
+                            <div key={index} 
+                                className="solved-card" 
+                                onClick={() => handleChallengeClick(challenge)}>
+                                <h4 className="solved-title">{challenge.challenge_name}</h4>
+                                <p className="solved-details">Execution Time: {challenge.execution_time_ms}ms</p>
+                                <p className="solved-date">
+                                    {new Date(challenge.submitted_at).toLocaleDateString()}
+                                </p>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
                 <div className="bottom-box playlists">
                     <h3 className="box-title">Playlists:</h3>

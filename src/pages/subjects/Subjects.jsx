@@ -385,7 +385,6 @@ function Subjects() {
                   />
                   <span>{difficulty}</span>
                 </div>
-                return (
                 <button
                   className="search-button"
                   onClick={() =>
@@ -399,7 +398,6 @@ function Subjects() {
                 >
                   {isLoading ? "Loading..." : "Search"}
                 </button>
-                );
               </>
             )}
           </div>

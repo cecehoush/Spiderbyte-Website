@@ -40,12 +40,14 @@ function Profile({ onLogout, username, streakData, userid }) {
                 setSolvedChallenges(data);
                 const counts = { easy: 0, medium: 0, hard: 0 };
                 data.forEach((challenge) => {
-                    if (challenge.challenge_difficulty >= 1 && challenge.challenge_difficulty <= 3) {
-                        counts.easy++;
-                    } else if (challenge.challenge_difficulty >= 4 && challenge.challenge_difficulty <= 7) {
-                        counts.medium++;
-                    } else if (challenge.challenge_difficulty >= 8 && challenge.challenge_difficulty <= 10) {
-                        counts.hard++;
+                    if (challenge.valid_solution) {
+                        if (challenge.challenge_difficulty >= 1 && challenge.challenge_difficulty <= 3) {
+                            counts.easy++;
+                        } else if (challenge.challenge_difficulty >= 4 && challenge.challenge_difficulty <= 7) {
+                            counts.medium++;
+                        } else if (challenge.challenge_difficulty >= 8 && challenge.challenge_difficulty <= 10) {
+                            counts.hard++;
+                        }
                     }
                 });
                 setChallengeCounts(counts);
@@ -170,11 +172,10 @@ function Profile({ onLogout, username, streakData, userid }) {
                 </div>
             </div>
             <div className="bottom-boxes-container">
-
                 <div className="bottom-box solved-challenges">
                     <h3 className="box-title">Solved Challenges:</h3>
                     <ul>
-                        {solvedChallenges.map((challenge, index) => (
+                        {solvedChallenges.filter(challenge => challenge.valid_solution).map((challenge, index) => (
                             <li key={index} onClick={() => handleChallengeClick(challenge)}>
                                 <p>Challenge: {challenge.challenge_name}</p>
                                 <p>Execution Time: {challenge.execution_time_ms}ms</p>

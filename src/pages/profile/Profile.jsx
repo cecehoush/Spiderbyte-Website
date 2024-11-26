@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import catImage from '../../assets/cat.jpg';
 import port from '../../port';
+import { PlaylistCard } from '../../components/playlists/PlaylistCard';
+import { CreatePlaylistModal } from '../../components/playlists/CreatePlaylistModal';
+import '../../components/playlists/Playlists.css';
 
 function Profile({ onLogout, username, streakData, userid }) {
     const [tags, setTags] = useState([]);
@@ -10,8 +13,25 @@ function Profile({ onLogout, username, streakData, userid }) {
     const [showTagOptions, setShowTagOptions] = useState(false);
     const [solvedChallenges, setSolvedChallenges] = useState([]);
     const [challengeCounts, setChallengeCounts] = useState({ easy: 0, medium: 0, hard: 0 });
+    const [playlists, setPlaylists] = useState([
+        // placeholder playlist :>
+        {
+            id: '1',
+            title: 'Getting Started',
+            description: 'Essential challenges for beginners',
+            challenges: []
+        }
+    ]);
+    const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
+    const handleCreatePlaylist = (newPlaylist) => {
+        const playlistWithId = {
+            ...newPlaylist,
+            id: String(playlists.length + 1)
+        };
+        setPlaylists([...playlists, playlistWithId]);
+    };
 
     useEffect(() => {
         // Fetch challenges and aggregate tags from subject_tags and content_tags
@@ -186,8 +206,23 @@ function Profile({ onLogout, username, streakData, userid }) {
                 </div>
                 <div className="bottom-box playlists">
                     <h3 className="box-title">Playlists:</h3>
-                    <button className="add-playlist-button">+</button>
-                    {/* Add content for Playlists here */}
+                    <button 
+                        className="add-playlist-button" 
+                        onClick={() => setShowCreatePlaylist(true)}
+                    >
+                        +
+                    </button>
+                    <div className="playlists-container">
+                        {playlists.map(playlist => (
+                            <PlaylistCard key={playlist.id} playlist={playlist} />
+                        ))}
+                    </div>
+                    {showCreatePlaylist && (
+                        <CreatePlaylistModal
+                            onClose={() => setShowCreatePlaylist(false)}
+                            onCreatePlaylist={handleCreatePlaylist}
+                        />
+                    )}
                 </div>
             </div>
         </div>

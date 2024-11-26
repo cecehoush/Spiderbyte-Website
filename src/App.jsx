@@ -9,6 +9,7 @@ import Profile from "./pages/profile/Profile.jsx";
 import Challenge from "./pages/challenge/Challenge.jsx";
 import LoginSignup from "./pages/auth/Auth.jsx";
 import CodeEditorPage from "./pages/code-editor/CodeEditor.jsx";
+import { PlaylistView } from './components/playlists/PlaylistView';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -108,6 +109,10 @@ function App() {
         <Route 
           path="/editor/:challengeId" 
           element={<CodeEditorPage isLoggedIn={isLoggedIn} username={localStorage.getItem("username")} userid={localStorage.getItem("userid")} />} 
+        />
+        <Route 
+          path="/playlist/:id" 
+          element={<PlaylistView playlists={[]} />}
         />
       </Routes>
     </>

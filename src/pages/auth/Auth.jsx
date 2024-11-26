@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Auth.css';
 import axios from 'axios';
+import port from '../../port';
 
 function LoginSignup({ onLogin, onSignup }) {
     const location = useLocation();
@@ -15,10 +16,10 @@ function LoginSignup({ onLogin, onSignup }) {
         setError('');
         try {
             if (isLogin) {
-                const response = await axios.post('http://localhost:5000/api/users/signin', { username, password });
+                const response = await axios.post(`http://localhost:${port}/api/users/signin`, { username, password });
                 onLogin(response.data);
             } else {
-                const response = await axios.post('http://localhost:5000/api/users/signup', { username, password });
+                const response = await axios.post(`http://localhost:${port}/api/users/signup`, { username, password });
                 onSignup(response.data);
             }
         } catch (err) {

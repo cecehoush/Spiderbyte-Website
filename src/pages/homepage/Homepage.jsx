@@ -3,6 +3,7 @@ import SubjectsForYou from './SubjectsForYou';
 import TrendingChallenges from './TrendingChallenges';
 import ProfileStats from './ProfileStats';
 import "./Homepage.css";
+import port from "../../port";
 
 function Home({ isLoggedIn, username, streakData }) {
     const [subjects, setSubjects] = useState([]);
@@ -11,7 +12,7 @@ function Home({ isLoggedIn, username, streakData }) {
     // Fetch subjects (customize based on your requirements)
     useEffect(() => {
       // Fetch all subjects
-      fetch('http://localhost:5000/api/subjects', {
+      fetch(`http://localhost:${port}/api/subjects`, {
         credentials: 'include', // Include cookies with the request
     })
           .then((response) => response.json())
@@ -21,7 +22,7 @@ function Home({ isLoggedIn, username, streakData }) {
 
     // Fetch all challenges and pick 3 random ones
     useEffect(() => {
-        fetch("http://localhost:5000/api/challenges", {
+        fetch(`http://localhost:${port}/api/challenges`, {
             credentials: 'include', // Include cookies with the request
         })
             .then((response) => response.json())

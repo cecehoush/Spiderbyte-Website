@@ -4,6 +4,7 @@ import "./Subjects.css";
 import { Link } from "react-router-dom";
 import { X, Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import  port  from "../../port";
 
 function Subjects() {
   const location = useLocation();
@@ -28,7 +29,7 @@ function Subjects() {
 
   useEffect(() => {
     // Fetch all subjects initially
-    fetch("http://localhost:5000/api/subjects", {
+    fetch(`http://localhost:${port}/api/subjects`, {
       credentials: "include", // Include cookies with the request
     })
       .then((response) => response.json())
@@ -49,11 +50,11 @@ function Subjects() {
     setIsLoading(true); // Show loader immediately
     if (!isPopupOpen) {
       try {
-        const response = await fetch("http://localhost:5000/api/subjects"); // Use the proxy
+        const response = await fetch(`http://localhost:${port}/api/subjects`); // Use the proxy
         const data = await response.json();
         const subjectNames = data.map((subject) => subject.name);
         setSubjectTags(subjectNames);
-        const tagResponse = await fetch("http://localhost:5000/api/tags");
+        const tagResponse = await fetch(`http://localhost:${port}/api/tags`);
         const tagData = await tagResponse.json();
         const tagNames = tagData.map((tag) => tag.name);
         setContentTags(tagNames);
@@ -74,7 +75,7 @@ function Subjects() {
   ) => {
     setIsLoading(true);
 
-    fetch(`http://localhost:5000/api/challenges/getquestion`, {
+    fetch(`http://localhost:${port}/api/challenges/getquestion`, {
       method: "POST", // Use POST if you're sending a body; GET doesn't support a body in HTTP
       credentials: "include", // Include cookies with the request
       headers: {
@@ -111,7 +112,7 @@ function Subjects() {
     setSelectedSubjectName(subjectName);
     setCurrentPage(0);
 
-    fetch(`http://localhost:5000/api/subjects/name/${subjectName}/challenges`, {
+    fetch(`http://localhost:${port}/api/subjects/name/${subjectName}/challenges`, {
       credentials: "include", // Include cookies with the request
     })
       .then((response) => response.json())

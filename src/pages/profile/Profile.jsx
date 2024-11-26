@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import catImage from '../../assets/cat.jpg';
+import port from '../../port';
 
 function Profile({ onLogout, username, streakData, userid }) {
     const [tags, setTags] = useState([]);
@@ -14,7 +15,7 @@ function Profile({ onLogout, username, streakData, userid }) {
 
     useEffect(() => {
         // Fetch challenges and aggregate tags from subject_tags and content_tags
-        fetch('http://localhost:5000/api/challenges', {
+        fetch(`http://localhost:${port}/api/challenges`, {
             credentials: 'include', // Include cookies with the request
         })
             .then((response) => response.json())
@@ -31,7 +32,7 @@ function Profile({ onLogout, username, streakData, userid }) {
 
     useEffect(() => {
         // Fetch solved challenges
-        fetch(`http://localhost:5000/api/submissions/user/${userid}`, {
+        fetch(`http://localhost:${port}/api/submissions/user/${userid}`, {
             credentials: 'include', // Include cookies with the request
         })
             .then((response) => response.json())
@@ -82,7 +83,7 @@ function Profile({ onLogout, username, streakData, userid }) {
     }, []);
 
     const handleChallengeClick = (challenge) => {
-        fetch(`http://localhost:5000/api/challenges/name/${challenge.challenge_name}`, {
+        fetch(`http://localhost:${port}/api/challenges/name/${challenge.challenge_name}`, {
             credentials: 'include',
         })
             .then((response) => response.json())

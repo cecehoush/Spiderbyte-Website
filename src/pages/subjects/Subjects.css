@@ -320,3 +320,36 @@
     font-size: 1rem;
     font-weight: 600;
 }
+
+/* ...existing styles... */
+
+.tags-section2 {
+    margin: 1rem 0;
+}
+
+.tags-section2 h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.tag-button2 {
+    background-color: #282828;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tag-button2:hover {
+    background-color: #353535;
+}
+
+.tag-button2.selected {
+    background-color: #53D597;
+    color: black;
+}
+
+/* ...existing styles... */

@@ -102,7 +102,9 @@
     gap: 10px;
     align-items: center;
     max-height: 150px;
-    overflow-y: auto;
+    overflow-y: scroll; /* Add scroll for long lists */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 .add-tag-button {
@@ -129,16 +131,18 @@
 }
 
 .tag-dropdown {
-    position: absolute;
-    left: 0;
-    width: 100%;
+    position: relative; /* Change this to relative */
+    margin-top: 8px; /* Ensure it has some spacing from the tags-container1 */
     background-color: #282828;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-height: 200px;
-    overflow-y: auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    padding: 8px;
+    border-radius: 4px;
+    width: max-content;
+    max-height: 200px; /* Optional: limit height and make it scrollable */
+    overflow-y: scroll; /* Add scroll for long lists */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 .dropdown-item {
@@ -213,7 +217,13 @@
     width: 40px;  
     height: 40px;  
     border-radius: 6px;  
-    transition: transform 0.2s ease-in-out;
+}
+
+@media (max-width: 1100px) {
+    .streak-day {
+        width: 20px;  
+        height: 20px;  
+    }
 }
 
 .streak-day:hover {
@@ -306,33 +316,44 @@
     color: white;
 }
 
-.solved-challenges ul {
-    list-style-type: none;
-    padding: 0;
-    max-height: 250px; /* Set a fixed height for the list */
-    overflow-y: auto; /* Make list scrollable */
-    scrollbar-width: none; /* For Firefox */
+.solved-container {
+    margin-top: 50px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.solved-challenges ul::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-}
-
-.solved-challenges li {
+.solved-card {
     background-color: #282828;
-    color: #FFFFFF;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
-    margin-bottom: 10px;
-    cursor: pointer; /* Add this line */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 0;
 }
 
-.solved-challenges li:hover {
-    cursor: pointer; /* Add this block */
+.solved-card:hover {
+    transform: scale(1.02);
 }
 
-.solved-challenges p {
-    margin: 5px 0;
+.solved-title {
+    color: #FFFFFF;
+    margin: 0 0 8px 0;
+    font-size: 16px;
+}
+
+.solved-details {
+    color: #CBD3D3;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.solved-date {
+    color: #53D597;
+    margin: 0;
+    font-size: 12px;
 }
 
 @media (max-width: 768px) {

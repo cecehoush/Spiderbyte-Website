@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Homepage.css";
-import "../profile/Profile.css";
 export default function ProfileStats({ isLoggedIn, username, streakData }) {
 
   const challengeSolved = 18;

@@ -1,17 +1,31 @@
 import "./Nav.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search as SearchIcon, Menu, X } from "lucide-react";
 import { useState } from "react";
+import axios from "axios"; // Ensure axios is imported
 import Logo from "../../assets/SpiderByteLogo 1.png";
 import Cat from "../../assets/cat.jpg";
 import Web from "../../assets/spider web.png";
 
 function Nav() {
   const location = useLocation();
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleDailyChallengeClick = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/challenges/daily");
+      if (response.status === 200) {
+        const challengeID = response.data.challengeID; // Adjust based on your API response
+        navigate(`/editor/${challengeID}`); // Dynamically navigate to the challenge page
+      }
+    } catch (error) {
+      console.error("Error fetching daily challenge:", error);
+    }
   };
 
   return (
@@ -21,30 +35,30 @@ function Nav() {
           <Link to="/" className="logo-link">
             <img src={Logo} className="logo" alt="Logo" />
           </Link>
-          
+
           <div className="links">
-            <Link to="/" className={location.pathname == "/" ? "active" : ""}>
+            <Link to="/" className={location.pathname === "/" ? "active" : ""}>
               Home
             </Link>
             <Link
               to="/subjects"
-              className={location.pathname == "/subjects" ? "active" : ""}
+              className={location.pathname === "/subjects" ? "active" : ""}
             >
               Subjects
             </Link>
             <Link
               to="/interviews"
-              className={location.pathname == "/interviews" ? "active" : ""}
+              className={location.pathname === "/interviews" ? "active" : ""}
             >
               Interviews
             </Link>
           </div>
         </div>
 
-        <Link to="/challenge" className="challengeButton">
+        <div className="challengeButton" onClick={handleDailyChallengeClick}>
           <div>Daily Challenge</div>
           <img src={Web} className="web" alt="Web" />
-        </Link>
+        </div>
 
         <div className="nav-section right">
           <div className="searchAndProfile">
@@ -81,25 +95,25 @@ function Nav() {
               className="search-input"
             />
           </div>
-          
+
           <div className="mobile-links">
             <Link 
               to="/" 
-              className={location.pathname == "/" ? "active" : ""}
+              className={location.pathname === "/" ? "active" : ""}
               onClick={toggleMobileMenu}
             >
               Home
             </Link>
             <Link
               to="/subjects"
-              className={location.pathname == "/subjects" ? "active" : ""}
+              className={location.pathname === "/subjects" ? "active" : ""}
               onClick={toggleMobileMenu}
             >
               Subjects
             </Link>
             <Link
               to="/interviews"
-              className={location.pathname == "/interviews" ? "active" : ""}
+              className={location.pathname === "/interviews" ? "active" : ""}
               onClick={toggleMobileMenu}
             >
               Interviews

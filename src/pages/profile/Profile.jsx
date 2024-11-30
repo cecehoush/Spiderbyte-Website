@@ -170,23 +170,25 @@ function Profile({ onLogout, username, streakData, userid }) {
                     <div className="username-and-tags">
                         <h2 className="username">{username}</h2>
                         <div className="tags-container1">
-                            <button className="add-tag-button" onClick={handleAddTag}>+</button>
-                            {showTagOptions && (
-                                <div ref={dropdownRef} className="tag-dropdown">
-                                    {tags.map((tag, index) => (
-                                        <div key={index} onClick={() => handleTagSelect(tag)} className="dropdown-item">
-                                            {tag}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            {selectedTags.map((tag, index) => (
-                                <div key={index} className="tag1">
+                        <button className="add-tag-button" onClick={handleAddTag}>+</button>
+                        {selectedTags.map((tag, index) => (
+                            <div key={index} className="tag1">
+                                {tag}
+                                <button className="remove-tag-button" onClick={() => handleRemoveTag(tag)}>×</button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {showTagOptions && (
+                        <div ref={dropdownRef} className="tag-dropdown">
+                            {tags.map((tag, index) => (
+                                <div key={index} onClick={() => handleTagSelect(tag)} className="dropdown-item">
                                     {tag}
-                                    <button className="remove-tag-button" onClick={() => handleRemoveTag(tag)}>×</button>
                                 </div>
                             ))}
                         </div>
+                    )}
+
                     </div>
                 </div>
                 <div className="streak-calendar">
@@ -207,15 +209,19 @@ function Profile({ onLogout, username, streakData, userid }) {
             <div className="bottom-boxes-container">
                 <div className="bottom-box solved-challenges">
                     <h3 className="box-title">Solved Challenges:</h3>
-                    <ul>
-                        {solvedChallenges.filter(challenge => challenge.valid_solution).map((challenge, index) => (
-                            <li key={index} onClick={() => handleChallengeClick(challenge)}>
-                                <p>Challenge: {challenge.challenge_name}</p>
-                                <p>Execution Time: {challenge.execution_time_ms}ms</p>
-                                <p>Date: {new Date(challenge.submitted_at).toLocaleDateString()}</p>
-                            </li>
+                    <div className="solved-container">
+                        {solvedChallenges.map((challenge, index) => (
+                            <div key={index} 
+                                className="solved-card" 
+                                onClick={() => handleChallengeClick(challenge)}>
+                                <h4 className="solved-title">{challenge.challenge_name}</h4>
+                                <p className="solved-details">Execution Time: {challenge.execution_time_ms}ms</p>
+                                <p className="solved-date">
+                                    {new Date(challenge.submitted_at).toLocaleDateString()}
+                                </p>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
                 <div className="bottom-box playlists">
                     <h3 className="box-title">Playlists:</h3>

@@ -213,7 +213,6 @@ function Subjects() {
             <button
               className="arrow left"
               onClick={handlePrev}
-              disabled={!canScrollLeft()}
             >
               &#10094;
             </button>

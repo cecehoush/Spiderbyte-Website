@@ -2,6 +2,7 @@ import "./Nav.css";
 import { Link, useLocation } from "react-router-dom";
 import { Search as SearchIcon, Menu, X } from "lucide-react";
 import { useState } from "react";
+import SearchBar from '../search/Search.jsx';
 import Logo from "../../assets/SpiderByteLogo 1.png";
 import Cat from "../../assets/cat.jpg";
 import Web from "../../assets/spider web.png";
@@ -48,14 +49,7 @@ function Nav() {
 
         <div className="nav-section right">
           <div className="searchAndProfile">
-            <div className="search">
-              <SearchIcon size={24} strokeWidth={2} className="search-icon" />
-              <input 
-                type="text"
-                placeholder="Search"
-                className="search-input"
-              />
-            </div>
+            <SearchBar />
             <Link to="/profile" className="profile">
               <img src={Cat} className="cat" alt="Profile" />
             </Link>

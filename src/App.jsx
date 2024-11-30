@@ -11,6 +11,7 @@ import LoginSignup from "./pages/auth/Auth.jsx";
 import CodeEditorPage from "./pages/code-editor/CodeEditor.jsx";
 import { PlaylistView } from './components/playlists/PlaylistView';
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -111,8 +112,8 @@ function App() {
           element={<CodeEditorPage isLoggedIn={isLoggedIn} username={localStorage.getItem("username")} userid={localStorage.getItem("userid")} />} 
         />
         <Route 
-          path="/playlist/:id" 
-          element={<PlaylistView playlists={[]} />}
+          path="/playlist/:name" 
+          element={<PlaylistView />}
         />
       </Routes>
     </>

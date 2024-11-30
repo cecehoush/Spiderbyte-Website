@@ -13,24 +13,12 @@ function Profile({ onLogout, username, streakData, userid }) {
     const [showTagOptions, setShowTagOptions] = useState(false);
     const [solvedChallenges, setSolvedChallenges] = useState([]);
     const [challengeCounts, setChallengeCounts] = useState({ easy: 0, medium: 0, hard: 0 });
-    const [playlists, setPlaylists] = useState([
-        // placeholder playlist :>
-        {
-            id: '1',
-            title: 'Getting Started',
-            description: 'Essential challenges for beginners',
-            challenges: []
-        }
-    ]);
+    const [playlists, setPlaylists] = useState([]);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
     const handleCreatePlaylist = (newPlaylist) => {
-        const playlistWithId = {
-            ...newPlaylist,
-            id: String(playlists.length + 1)
-        };
-        setPlaylists([...playlists, playlistWithId]);
+        setPlaylists([...playlists, newPlaylist]);
     };
 
     useEffect(() => {
@@ -74,6 +62,31 @@ function Profile({ onLogout, username, streakData, userid }) {
             })
             .catch((error) => console.error('Error fetching solved challenges:', error));
     }, [userid]);
+
+    useEffect(() => {
+        console.log('Fetching playlists for userid:', userid);
+        fetch(`http://localhost:${port}/api/playlists/${userid}`, {
+            credentials: 'include'
+        })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Raw playlist data:', data);
+                // Check if data.playlists exists (in case API returns { playlists: [] })
+                const playlistArray = Array.isArray(data) ? data : 
+                                    (data.playlists ? data.playlists : []);
+                console.log('Processed playlist array:', playlistArray);
+                setPlaylists(playlistArray);
+            })
+            .catch(error => console.error('Error fetching playlists:', error));
+    }, [userid]);
+
+    // Add this to monitor playlists state changes
+    useEffect(() => {
+        console.log('Playlists state updated:', playlists);
+    }, [playlists]);
 
     const handleAddTag = () => {
         setShowTagOptions(!showTagOptions);
@@ -213,14 +226,32 @@ function Profile({ onLogout, username, streakData, userid }) {
                         +
                     </button>
                     <div className="playlists-container">
-                        {playlists.map(playlist => (
-                            <PlaylistCard key={playlist.id} playlist={playlist} />
-                        ))}
+                        {Array.isArray(playlists) && playlists.length > 0 ? (
+                            playlists.map(playlist => {
+                                console.log('Rendering playlist in profile:', playlist);
+                                return (
+                                    <PlaylistCard 
+                                        key={playlist._id}
+                                        playlist={{
+                                            id: playlist._id,
+                                            name: playlist.name,  // Change title to name
+                                            description: playlist.description,
+                                            challengeCount: playlist.challenges?.length || 0
+                                        }} 
+                                    />
+                                );
+                            })
+                        ) : (
+                            <p style={{ color: '#FFFFFF', textAlign: 'center', marginTop: '60px' }}>
+                                No playlists found. Create one by clicking the + button!
+                            </p>
+                        )}
                     </div>
                     {showCreatePlaylist && (
                         <CreatePlaylistModal
                             onClose={() => setShowCreatePlaylist(false)}
                             onCreatePlaylist={handleCreatePlaylist}
+                            userid={userid}  // Add this line
                         />
                     )}
                 </div>

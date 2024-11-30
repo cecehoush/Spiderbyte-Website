@@ -305,18 +305,18 @@ function Subjects() {
         </div>
 
         {/* Tags Section */}
-        <div className="tags-container">
-          <div className="tags-label">Tags:</div>
-          <div className="tags-grid">
+        <div className="tags-container2">
+          <div className="tags-label2">Tags:</div>
+          <div className="tags-grid2">
             {tags.map((tag, index) => (
-              <label key={index} className="tag">
+              <label key={index} className="tag2">
                 <input
                   type="checkbox"
                   checked={selectedTags.has(tag)}
                   onChange={() => handleTagToggle(tag)}
-                  className="tag-checkbox"
+                  className="tag-checkbox2"
                 />
-                <span className="tag-name">{tag}</span>
+                <span className="tag-name2">{tag}</span>
               </label>
             ))}
           </div>
@@ -334,12 +334,12 @@ function Subjects() {
               <Loader size={48} className="loader" />
             ) : (
               <>
-                <div className="tags-section">
+                <div className="tags-section2">
                   <h3>Subject Tags</h3>
                   {subjectTags.map((tag) => (
                     <button
                       key={tag}
-                      className={`tag-button ${
+                      className={`tag-button2 ${
                         selectedSubjectTags.includes(tag) ? "selected" : ""
                       }`}
                       onClick={() =>
@@ -354,12 +354,12 @@ function Subjects() {
                     </button>
                   ))}
                 </div>
-                <div className="tags-section">
+                <div className="tags-section2">
                   <h3>Content Tags</h3>
                   {contentTags.map((tag) => (
                     <button
                       key={tag}
-                      className={`tag-button ${
+                      className={`tag-button2 ${
                         selectedContentTags.includes(tag) ? "selected" : ""
                       }`}
                       onClick={() =>
